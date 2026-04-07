@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReemCollection - Payment Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;500;600&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f7f6f2;--card:#fff;--border:#e4e2da;--text:#1a1916;--muted:#7a786e;
+    --green:#1a6b3c;--green-bg:#e8f5ee;--amber:#8a5a00;--amber-bg:#fef3d8;
+    --blue:#1a4a8a;--blue-bg:#e8eef8;
+  }
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
+  .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:36px;height:36px;background:#1a6b3c;border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+  .logo-text{font-size:15px;font-weight:600;letter-spacing:-0.3px}
+  .logo-sub{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+  .date-chip{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);background:var(--card);border:0.5px solid var(--border);padding:5px 10px;border-radius:20px}
+  .tabs{display:flex;gap:4px;background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:1.25rem}
+  .tab{flex:1;padding:8px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:7px;color:var(--muted);font-family:'Sora',sans-serif;transition:all 0.15s}
+  .tab.active{background:#1a6b3c;color:#fff}
+  .card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:1.25rem}
+  .section-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.75rem}
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:5px}
+  .field input{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s}
+  .field input:focus{border-color:#1a6b3c}
+  .amount-row{display:flex;gap:8px;align-items:stretch}
+  .amount-prefix{display:flex;align-items:center;padding:0 12px;background:var(--bg);border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace;color:var(--muted)}
+  .amount-row input{flex:1;min-width:0}
+  .methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .method{padding:10px 8px;border:0.5px solid var(--border);border-radius:9px;cursor:pointer;text-align:center;background:var(--bg);transition:all 0.15s}
+  .method.active.cash{background:var(--amber-bg);border-color:#d4a820;color:var(--amber)}
+  .method.active.bank{background:var(--blue-bg);border-color:#5a82c8;color:var(--blue)}
+  .method.active.pos{background:var(--green-bg);border-color:#4a9e6e;color:var(--green)}
+  .method-icon{font-size:18px;display:block;margin-bottom:3px}
+  .method-name{font-size:12px;font-weight:500}
+  .btn-add{width:100%;padding:12px;background:#1a6b3c;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;transition:opacity 0.15s}
+  .btn-add:hover{opacity:0.88}
+  .toast{position:fixed;top:1rem;right:1rem;background:#1a6b3c;color:#fff;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
+  .toast.show{opacity:1}
+  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+  .stat{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:12px}
+  .stat-val{font-size:16px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-0.5px}
+  .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+
+  /* Controls row — stacked for date filter */
+  .controls-row{display:flex;gap:8px;margin-bottom:0.5rem;align-items:stretch}
+  .search-wrap{flex:1;position:relative;min-width:0}
+  .search-wrap input{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s}
+  .search-wrap input:focus{border-color:#1a6b3c}
+  .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--muted)}
+
+  /* Date filter row */
+  .date-filter-row{display:flex;gap:8px;margin-bottom:0.85rem;align-items:center}
+  .date-filter-wrap{flex:1;position:relative;min-width:0}
+  .date-filter-wrap input[type="date"]{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
+  .date-filter-wrap input[type="date"]:focus{border-color:#1a6b3c}
+  .date-filter-wrap input[type="date"].active{border-color:#1a6b3c;background:var(--green-bg)}
+  .date-filter-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--muted)}
+  .btn-clear-date{padding:9px 12px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--muted);transition:all 0.15s;white-space:nowrap;display:none}
+  .btn-clear-date.visible{display:block}
+  .btn-clear-date:hover{border-color:#c0392b;color:#c0392b}
+
+  .results-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:0.6rem}
+  .hist-list{display:flex;flex-direction:column;gap:7px}
+  .hist-item{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .hi-badge{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+  .hi-badge.cash{background:var(--amber-bg)}
+  .hi-badge.bank{background:var(--blue-bg)}
+  .hi-badge.pos{background:var(--green-bg)}
+  .hi-info{flex:1;min-width:0}
+  .hi-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hi-date{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+  .hi-amount{font-size:15px;font-weight:600;font-family:'DM Mono',monospace;color:#1a6b3c;white-space:nowrap}
+  .hi-del{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:5px;font-size:13px;opacity:0.6;transition:opacity 0.15s}
+  .hi-del:hover{opacity:1;color:#c0392b}
+  .highlight{background:#fff3cd;border-radius:2px;padding:0 1px}
+  .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:13px}
+  .export-bar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+  .btn-export{flex:1;min-width:120px;padding:9px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--text);transition:all 0.15s}
+  .btn-export:hover{background:var(--bg)}
+  .btn-export.primary{background:#1a6b3c;color:#fff;border-color:#1a6b3c}
+  .btn-export.primary:hover{opacity:0.88}
+  .btn-export.whatsapp{background:#25d366;color:#fff;border-color:#25d366}
+  .btn-export.whatsapp:hover{opacity:0.88}
+
+  /* Storage info banner */
+  .storage-info{display:flex;align-items:center;gap:7px;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:9px;padding:8px 12px;margin-bottom:1rem;font-size:11px;color:var(--green);font-family:'DM Mono',monospace}
+  .storage-info span{flex:1}
+
+  #snapshot{position:absolute;left:-9999px;top:0;width:600px;background:#f7f6f2;padding:32px;font-family:'Sora',sans-serif}
+  .snap-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;border-bottom:1.5px solid #e4e2da;padding-bottom:18px}
+  .snap-title{font-size:20px;font-weight:600;color:#1a1916}
+  .snap-sub{font-size:12px;color:#7a786e;margin-top:3px;font-family:'DM Mono',monospace}
+  .snap-total{text-align:right}
+  .snap-total-val{font-size:26px;font-weight:600;color:#1a6b3c;font-family:'DM Mono',monospace}
+  .snap-total-lbl{font-size:11px;color:#7a786e}
+  .snap-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid #e4e2da}
+  .snap-num{font-size:11px;color:#7a786e;width:22px;font-family:'DM Mono',monospace}
+  .snap-badge{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+  .snap-info{flex:1}
+  .snap-name{font-size:13px;font-weight:600}
+  .snap-meta{font-size:11px;color:#7a786e;font-family:'DM Mono',monospace}
+  .snap-amt{font-size:14px;font-weight:600;color:#1a6b3c;font-family:'DM Mono',monospace}
+  .snap-footer{margin-top:18px;font-size:11px;color:#7a786e;font-family:'DM Mono',monospace;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">ReemCollection</div>
+        <div class="logo-sub">payment tracker</div>
+      </div>
+    </div>
+    <div class="date-chip" id="today-chip"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('add',this)">+ New Entry</button>
+    <button class="tab" onclick="switchTab('history',this)">History</button>
+  </div>
+
+  <div id="tab-add">
+    <div class="card">
+      <div class="section-label">Customer details</div>
+      <div class="field">
+        <label>Customer name</label>
+        <input type="text" id="cust-name" placeholder="Enter full name" />
+      </div>
+      <div class="field">
+        <label>Amount collected</label>
+        <div class="amount-row">
+          <div class="amount-prefix">QAR</div>
+          <input type="number" id="cust-amount" placeholder="0.00" min="0" step="0.01" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="date" id="cust-date" />
+      </div>
+      <div class="field">
+        <label>Payment method</label>
+        <div class="methods">
+          <div class="method cash active" onclick="selectMethod('cash',this)">
+            <span class="method-icon">💵</span>
+            <span class="method-name">Cash</span>
+          </div>
+          <div class="method bank" onclick="selectMethod('bank',this)">
+            <span class="method-icon">🏦</span>
+            <span class="method-name">Bank</span>
+          </div>
+          <div class="method pos" onclick="selectMethod('pos',this)">
+            <span class="method-icon">💳</span>
+            <span class="method-name">POS</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-add" onclick="addEntry()">Add Payment Record</button>
+    </div>
+  </div>
+
+  <div id="tab-history" style="display:none">
+    <div class="summary">
+      <div class="stat"><div class="stat-val" id="s-total">QAR 0.00</div><div class="stat-lbl">Total collected</div></div>
+      <div class="stat"><div class="stat-val" id="s-count">0</div><div class="stat-lbl">Transactions</div></div>
+      <div class="stat"><div class="stat-val" id="s-today">QAR 0.00</div><div class="stat-lbl">Today</div></div>
+    </div>
+
+    <!-- Storage info banner -->
+    <div class="storage-info">
+      <span>💾 Data saved on this device — records kept until manually cleared</span>
+      <span id="storage-age" style="opacity:0.75"></span>
+    </div>
+
+    <!-- Name / method search -->
+    <div class="controls-row">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search by name or method..." oninput="renderHistory()" />
+      </div>
+    </div>
+
+    <!-- Date filter -->
+    <div class="date-filter-row">
+      <div class="date-filter-wrap">
+        <span class="date-filter-icon">📅</span>
+        <input type="date" id="date-filter" onchange="onDateFilterChange()" />
+      </div>
+      <button class="btn-clear-date" id="btn-clear-date" onclick="clearDateFilter()">✕ Clear date</button>
+    </div>
+
+    <div class="results-count" id="results-count"></div>
+
+    <div class="export-bar">
+      <button class="btn-export" onclick="clearAll()">🗑 Clear all</button>
+      <button class="btn-export whatsapp" onclick="shareToWhatsApp()">📱 Share</button>
+      <button class="btn-export primary" onclick="exportJPG()">⬇ Save as JPG</button>
+    </div>
+    <div class="hist-list" id="hist-list"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="snapshot"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+let entries = [];
+let selMethod = 'cash';
+const methodIcons = {cash:'💵',bank:'🏦',pos:'💳'};
+const methodLabels = {cash:'Cash',bank:'Bank Transfer',pos:'POS / Card'};
+
+const STORAGE_KEY = 'reemcollection_entries';
+
+function today(){return new Date().toISOString().split('T')[0];}
+function fmtDate(s){return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtAmt(v){return Number(v).toLocaleString('en-QA',{minimumFractionDigits:2,maximumFractionDigits:2});}
+
+document.getElementById('cust-date').value = today();
+document.getElementById('today-chip').textContent = fmtDate(today());
+
+/* ── Persistent storage: localStorage (no expiry) ─────────────────── */
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) entries = JSON.parse(raw);
+    // migration: make sure every entry has an id
+    entries = entries.map((e,i) => ({id: e.id || Date.now()+i, ...e}));
+  }catch(e){
+    entries = [];
+  }
+  updateStorageAge();
+  renderHistory();
+}
+
+function save(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    // store first-save timestamp if not set
+    if(!localStorage.getItem('reemcollection_since')){
+      localStorage.setItem('reemcollection_since', today());
+    }
+    updateStorageAge();
+  }catch(e){
+    showToast('Failed to save data');
+  }
+}
+
+function updateStorageAge(){
+  const since = localStorage.getItem('reemcollection_since');
+  const el = document.getElementById('storage-age');
+  if(since && el){
+    const days = Math.floor((new Date(today()) - new Date(since)) / 86400000);
+    el.textContent = days === 0 ? 'since today' : 'since '+fmtDate(since)+' ('+days+'d)';
+  }
+}
+
+/* ── Date filter ───────────────────────────────────────────────────── */
+function onDateFilterChange(){
+  const val = document.getElementById('date-filter').value;
+  const btn = document.getElementById('btn-clear-date');
+  const input = document.getElementById('date-filter');
+  if(val){
+    btn.classList.add('visible');
+    input.classList.add('active');
+  } else {
+    btn.classList.remove('visible');
+    input.classList.remove('active');
+  }
+  renderHistory();
+}
+
+function clearDateFilter(){
+  document.getElementById('date-filter').value = '';
+  document.getElementById('btn-clear-date').classList.remove('visible');
+  document.getElementById('date-filter').classList.remove('active');
+  renderHistory();
+}
+
+/* ── UI helpers ────────────────────────────────────────────────────── */
+function selectMethod(m,el){
+  selMethod=m;
+  document.querySelectorAll('.method').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+}
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-add').style.display=tab==='add'?'block':'none';
+  document.getElementById('tab-history').style.display=tab==='history'?'block':'none';
+  if(tab==='history') renderHistory();
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ── CRUD ──────────────────────────────────────────────────────────── */
+function addEntry(){
+  const name=document.getElementById('cust-name').value.trim();
+  const amount=parseFloat(document.getElementById('cust-amount').value);
+  const date=document.getElementById('cust-date').value;
+  if(!name){showToast('Please enter customer name');return;}
+  if(!amount||amount<=0){showToast('Please enter a valid amount');return;}
+  if(!date){showToast('Please select a date');return;}
+  entries.unshift({id:Date.now(),name,amount,date,method:selMethod});
+  save();
+  document.getElementById('cust-name').value='';
+  document.getElementById('cust-amount').value='';
+  document.getElementById('cust-date').value=today();
+  showToast('Payment recorded!');
+}
+
+function deleteEntry(id){entries=entries.filter(e=>e.id!==id);save();renderHistory();}
+
+function clearAll(){
+  if(entries.length===0){showToast('Nothing to clear');return;}
+  if(confirm('Clear all payment records?')){
+    entries=[];
+    localStorage.removeItem('reemcollection_since');
+    save();
+    renderHistory();
+    showToast('All records cleared');
+  }
+}
+
+/* ── Render ────────────────────────────────────────────────────────── */
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function highlightMatch(text, query){
+  if(!query) return escapeHtml(text);
+  const escaped=escapeHtml(text);
+  const escapedQ=query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return escaped.replace(new RegExp('('+escapedQ+')', 'gi'), '<span class="highlight">$1</span>');
+}
+
+function renderHistory(){
+  const todayStr = today();
+  const total = entries.reduce((s,e)=>s+e.amount,0);
+  const todayTotal = entries.filter(e=>e.date===todayStr).reduce((s,e)=>s+e.amount,0);
+  document.getElementById('s-total').textContent = 'QAR '+fmtAmt(total);
+  document.getElementById('s-count').textContent = entries.length;
+  document.getElementById('s-today').textContent = 'QAR '+fmtAmt(todayTotal);
+
+  const query = (document.getElementById('search-input')||{value:''}).value.trim().toLowerCase();
+  const dateFilter = (document.getElementById('date-filter')||{value:''}).value;
+
+  let filtered = entries.filter(e => {
+    const matchName = !query || e.name.toLowerCase().includes(query) || methodLabels[e.method].toLowerCase().includes(query);
+    const matchDate = !dateFilter || e.date === dateFilter;
+    return matchName && matchDate;
+  });
+
+  // Keep insertion order (newest first — entries are unshifted on add)
+  // No extra sorting applied
+
+  const rc = document.getElementById('results-count');
+  let countMsg = '';
+  if(dateFilter && query){
+    countMsg = filtered.length+' result'+(filtered.length!==1?'s':'')+' on '+fmtDate(dateFilter)+' for "'+query+'"';
+  } else if(dateFilter){
+    countMsg = filtered.length+' record'+(filtered.length!==1?'s':'')+' on '+fmtDate(dateFilter);
+  } else if(query){
+    countMsg = filtered.length+' result'+(filtered.length!==1?'s':'')+' for "'+query+'"';
+  } else {
+    countMsg = entries.length+' record'+(entries.length!==1?'s':'')+' stored';
+  }
+  rc.textContent = countMsg;
+
+  const list = document.getElementById('hist-list');
+  if(filtered.length===0){
+    let msg = '';
+    if(dateFilter && query) msg = 'No records match "'+escapeHtml(query)+'" on '+fmtDate(dateFilter)+'.';
+    else if(dateFilter) msg = 'No records found for '+fmtDate(dateFilter)+'.';
+    else if(query) msg = 'No records match "'+escapeHtml(query)+'".<br>Try a different name or method.';
+    else msg = 'No payment records yet.<br>Add your first entry above.';
+    list.innerHTML = '<div class="empty">'+msg+'</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(e => `
+    <div class="hist-item">
+      <div class="hi-badge ${e.method}">${methodIcons[e.method]}</div>
+      <div class="hi-info">
+        <div class="hi-name">${highlightMatch(e.name, query)}</div>
+        <div class="hi-date">${fmtDate(e.date)} · ${highlightMatch(methodLabels[e.method], query)}</div>
+      </div>
+      <div class="hi-amount">QAR ${fmtAmt(e.amount)}</div>
+      <button class="hi-del" onclick="deleteEntry(${e.id})" title="Delete">✕</button>
+    </div>
+  `).join('');
+}
+
+/* ── Share / Export ────────────────────────────────────────────────── */
+function shareToWhatsApp(){
+  if(entries.length===0){showToast('No records to share');return;}
+  const byDate = {};
+  entries.forEach(e => {
+    if(!byDate[e.date]) byDate[e.date] = [];
+    byDate[e.date].push(e);
+  });
+  let message = '*ReemCollection - Payment Report*\n';
+  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+  const total = entries.reduce((s,e)=>s+e.amount,0);
+  Object.keys(byDate).sort().reverse().forEach(date => {
+    const dateTotal = byDate[date].reduce((s,e)=>s+e.amount,0);
+    message += `📅 *${fmtDate(date)}*\n`;
+    byDate[date].forEach(e => {
+      message += `${methodIcons[e.method]} ${e.name} - QAR ${fmtAmt(e.amount)}\n`;
+    });
+    message += `Subtotal: QAR ${fmtAmt(dateTotal)}\n\n`;
+  });
+  message += '━━━━━━━━━━━━━━━━━━━━\n';
+  message += `*Total: QAR ${fmtAmt(total)}*\n`;
+  message += `Generated: ${fmtDate(today())}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(message), '_blank');
+  showToast('Opening WhatsApp...');
+}
+
+async function exportJPG(){
+  if(entries.length===0){showToast('No records to export');return;}
+  const todayStr=today();
+  const total=entries.reduce((s,e)=>s+e.amount,0);
+  const snap=document.getElementById('snapshot');
+  snap.innerHTML=`
+    <div class="snap-header">
+      <div>
+        <div class="snap-title">ReemCollection — Payment Report</div>
+        <div class="snap-sub">Generated on ${fmtDate(todayStr)} · ${entries.length} transaction${entries.length!==1?'s':''}</div>
+      </div>
+      <div class="snap-total">
+        <div class="snap-total-val">QAR ${fmtAmt(total)}</div>
+        <div class="snap-total-lbl">Total collected</div>
+      </div>
+    </div>
+    ${entries.map((e,i)=>`
+      <div class="snap-row">
+        <div class="snap-num">${i+1}</div>
+        <div class="snap-badge" style="background:${e.method==='cash'?'#fef3d8':e.method==='bank'?'#e8eef8':'#e8f5ee'}">${methodIcons[e.method]}</div>
+        <div class="snap-info">
+          <div class="snap-name">${e.name}</div>
+          <div class="snap-meta">${fmtDate(e.date)} · ${methodLabels[e.method]}</div>
+        </div>
+        <div class="snap-amt">QAR ${fmtAmt(e.amount)}</div>
+      </div>
+    `).join('')}
+    <div class="snap-footer">ReemCollection · payment-tracker · ${new Date().toLocaleString()}</div>
+  `;
+  snap.style.left='0';snap.style.zIndex='-1';
+  showToast('Generating image...');
+  try{
+    const canvas=await html2canvas(snap,{scale:2,useCORS:true,backgroundColor:'#f7f6f2'});
+    const link=document.createElement('a');
+    link.download='reemcollection-report-'+todayStr+'.jpg';
+    link.href=canvas.toDataURL('image/jpeg',0.95);
+    link.click();
+    showToast('JPG saved!');
+  }catch(e){showToast('Export failed, try again');}
+  snap.style.left='-9999px';
+}
+
+load();
+</script>
+
+</body>
+</html>
