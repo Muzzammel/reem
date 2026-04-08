@@ -10,7 +10,7 @@
   :root{
     --bg:#f7f6f2;--card:#fff;--border:#e4e2da;--text:#1a1916;--muted:#7a786e;
     --green:#1a6b3c;--green-bg:#e8f5ee;--amber:#8a5a00;--amber-bg:#fef3d8;
-    --blue:#1a4a8a;--blue-bg:#e8eef8;
+    --blue:#1a4a8a;--blue-bg:#e8eef8;--red:#c0392b;--red-bg:#fdecea;
   }
   body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
@@ -30,9 +30,20 @@
   .field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:5px}
   .field input{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s}
   .field input:focus{border-color:#1a6b3c}
-  .amount-row{display:flex;gap:8px;align-items:stretch}
-  .amount-prefix{display:flex;align-items:center;padding:0 12px;background:var(--bg);border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace;color:var(--muted)}
+  .field textarea{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s;resize:vertical;min-height:62px;line-height:1.5}
+  .field textarea:focus{border-color:#1a6b3c}
+  .field textarea::placeholder{color:var(--muted);opacity:0.7}
+
+  /* Amount + Discount side by side */
+  .amount-discount-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+  .amount-discount-row .field{margin-bottom:0}
+  .amount-row{display:flex;gap:6px;align-items:stretch}
+  .amount-prefix{display:flex;align-items:center;padding:0 10px;background:var(--bg);border:0.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Mono',monospace;color:var(--muted);white-space:nowrap}
+  .amount-prefix.red{color:var(--red);background:var(--red-bg);border-color:#f5c6c0}
   .amount-row input{flex:1;min-width:0}
+  .net-amount-bar{display:flex;align-items:center;justify-content:space-between;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:8px;padding:8px 12px;margin-bottom:1rem;font-size:12px;color:var(--green)}
+  .net-amount-bar span:last-child{font-family:'DM Mono',monospace;font-weight:600;font-size:13px}
+
   .methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .method{padding:10px 8px;border:0.5px solid var(--border);border-radius:9px;cursor:pointer;text-align:center;background:var(--bg);transition:all 0.15s}
   .method.active.cash{background:var(--amber-bg);border-color:#d4a820;color:var(--amber)}
@@ -49,14 +60,12 @@
   .stat-val{font-size:16px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-0.5px}
   .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
 
-  /* Controls row — stacked for date filter */
   .controls-row{display:flex;gap:8px;margin-bottom:0.5rem;align-items:stretch}
   .search-wrap{flex:1;position:relative;min-width:0}
   .search-wrap input{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s}
   .search-wrap input:focus{border-color:#1a6b3c}
   .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--muted)}
 
-  /* Date filter row */
   .date-filter-row{display:flex;gap:8px;margin-bottom:0.85rem;align-items:center}
   .date-filter-wrap{flex:1;position:relative;min-width:0}
   .date-filter-wrap input[type="date"]{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
@@ -66,6 +75,11 @@
   .btn-clear-date{padding:9px 12px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--muted);transition:all 0.15s;white-space:nowrap;display:none}
   .btn-clear-date.visible{display:block}
   .btn-clear-date:hover{border-color:#c0392b;color:#c0392b}
+
+  /* Share selected date button */
+  .btn-share-date{padding:9px 12px;border:0.5px solid #25d366;border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:#25d366;color:#fff;transition:all 0.15s;white-space:nowrap;display:none}
+  .btn-share-date.visible{display:block}
+  .btn-share-date:hover{opacity:0.85}
 
   .results-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:0.6rem}
   .hist-list{display:flex;flex-direction:column;gap:7px}
@@ -77,7 +91,8 @@
   .hi-info{flex:1;min-width:0}
   .hi-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .hi-date{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
-  .hi-amount{font-size:15px;font-weight:600;font-family:'DM Mono',monospace;color:#1a6b3c;white-space:nowrap}
+  .hi-amount{font-size:14px;font-weight:600;font-family:'DM Mono',monospace;color:#1a6b3c;white-space:nowrap;text-align:right;line-height:1.4}
+  .hi-discount-line{font-size:10px;color:var(--red);font-family:'DM Mono',monospace}
   .hi-del{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:5px;font-size:13px;opacity:0.6;transition:opacity 0.15s}
   .hi-del:hover{opacity:1;color:#c0392b}
   .highlight{background:#fff3cd;border-radius:2px;padding:0 1px}
@@ -90,7 +105,6 @@
   .btn-export.whatsapp{background:#25d366;color:#fff;border-color:#25d366}
   .btn-export.whatsapp:hover{opacity:0.88}
 
-  /* Storage info banner */
   .storage-info{display:flex;align-items:center;gap:7px;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:9px;padding:8px 12px;margin-bottom:1rem;font-size:11px;color:var(--green);font-family:'DM Mono',monospace}
   .storage-info span{flex:1}
 
@@ -107,7 +121,8 @@
   .snap-info{flex:1}
   .snap-name{font-size:13px;font-weight:600}
   .snap-meta{font-size:11px;color:#7a786e;font-family:'DM Mono',monospace}
-  .snap-amt{font-size:14px;font-weight:600;color:#1a6b3c;font-family:'DM Mono',monospace}
+  .snap-amt{font-size:14px;font-weight:600;color:#1a6b3c;font-family:'DM Mono',monospace;text-align:right}
+  .snap-amt-disc{font-size:10px;color:#c0392b;font-family:'DM Mono',monospace;text-align:right}
   .snap-footer{margin-top:18px;font-size:11px;color:#7a786e;font-family:'DM Mono',monospace;text-align:center}
 </style>
 </head>
@@ -139,13 +154,36 @@
         <label>Customer name</label>
         <input type="text" id="cust-name" placeholder="Enter full name" />
       </div>
-      <div class="field">
-        <label>Amount collected</label>
-        <div class="amount-row">
-          <div class="amount-prefix">QAR</div>
-          <input type="number" id="cust-amount" placeholder="0.00" min="0" step="0.01" />
+
+      <!-- Amount + Discount side by side -->
+      <div class="amount-discount-row">
+        <div class="field">
+          <label>Amount collected</label>
+          <div class="amount-row">
+            <div class="amount-prefix">QAR</div>
+            <input type="number" id="cust-amount" placeholder="0.00" min="0" step="0.01" oninput="updateNet()" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Discount</label>
+          <div class="amount-row">
+            <div class="amount-prefix red">−QAR</div>
+            <input type="number" id="cust-discount" placeholder="0.00" min="0" step="0.01" oninput="updateNet()" />
+          </div>
         </div>
       </div>
+      <!-- Net amount preview bar -->
+      <div class="net-amount-bar" id="net-bar" style="display:none">
+        <span>Net after discount</span>
+        <span id="net-preview">QAR 0.00</span>
+      </div>
+
+      <!-- Invoice numbers note box (before Date) -->
+      <div class="field">
+        <label>Paid invoice numbers</label>
+        <textarea id="cust-invoices" placeholder="e.g. INV-1042, INV-1043, INV-1050&#10;Enter one or multiple invoice numbers"></textarea>
+      </div>
+
       <div class="field">
         <label>Date</label>
         <input type="date" id="cust-date" />
@@ -178,7 +216,6 @@
       <div class="stat"><div class="stat-val" id="s-today">QAR 0.00</div><div class="stat-lbl">Today</div></div>
     </div>
 
-    <!-- Storage info banner -->
     <div class="storage-info">
       <span>💾 Data saved on this device — records kept until manually cleared</span>
       <span id="storage-age" style="opacity:0.75"></span>
@@ -192,20 +229,21 @@
       </div>
     </div>
 
-    <!-- Date filter -->
+    <!-- Date filter + Share date button -->
     <div class="date-filter-row">
       <div class="date-filter-wrap">
         <span class="date-filter-icon">📅</span>
         <input type="date" id="date-filter" onchange="onDateFilterChange()" />
       </div>
-      <button class="btn-clear-date" id="btn-clear-date" onclick="clearDateFilter()">✕ Clear date</button>
+      <button class="btn-share-date" id="btn-share-date" onclick="shareSelectedDate()">📱 Share date</button>
+      <button class="btn-clear-date" id="btn-clear-date" onclick="clearDateFilter()">✕ Clear</button>
     </div>
 
     <div class="results-count" id="results-count"></div>
 
     <div class="export-bar">
       <button class="btn-export" onclick="clearAll()">🗑 Clear all</button>
-      <button class="btn-export whatsapp" onclick="shareToWhatsApp()">📱 Share</button>
+      <button class="btn-export whatsapp" onclick="shareToWhatsApp()">📱 Share all</button>
       <button class="btn-export primary" onclick="exportJPG()">⬇ Save as JPG</button>
     </div>
     <div class="hist-list" id="hist-list"></div>
@@ -231,13 +269,26 @@ function fmtAmt(v){return Number(v).toLocaleString('en-QA',{minimumFractionDigit
 document.getElementById('cust-date').value = today();
 document.getElementById('today-chip').textContent = fmtDate(today());
 
-/* ── Persistent storage: localStorage (no expiry) ─────────────────── */
+/* ── Net amount preview ────────────────────────────────────────────── */
+function updateNet(){
+  const amount = parseFloat(document.getElementById('cust-amount').value) || 0;
+  const discount = parseFloat(document.getElementById('cust-discount').value) || 0;
+  const bar = document.getElementById('net-bar');
+  if(discount > 0 && amount > 0){
+    const net = Math.max(0, amount - discount);
+    document.getElementById('net-preview').textContent = 'QAR ' + fmtAmt(net);
+    bar.style.display = 'flex';
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+/* ── Persistent storage ────────────────────────────────────────────── */
 function load(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw) entries = JSON.parse(raw);
-    // migration: make sure every entry has an id
-    entries = entries.map((e,i) => ({id: e.id || Date.now()+i, ...e}));
+    entries = entries.map((e,i) => ({id: e.id || Date.now()+i, discount: 0, invoices: '', ...e}));
   }catch(e){
     entries = [];
   }
@@ -248,7 +299,6 @@ function load(){
 function save(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-    // store first-save timestamp if not set
     if(!localStorage.getItem('reemcollection_since')){
       localStorage.setItem('reemcollection_since', today());
     }
@@ -270,13 +320,16 @@ function updateStorageAge(){
 /* ── Date filter ───────────────────────────────────────────────────── */
 function onDateFilterChange(){
   const val = document.getElementById('date-filter').value;
-  const btn = document.getElementById('btn-clear-date');
+  const btnClear = document.getElementById('btn-clear-date');
+  const btnShare = document.getElementById('btn-share-date');
   const input = document.getElementById('date-filter');
   if(val){
-    btn.classList.add('visible');
+    btnClear.classList.add('visible');
+    btnShare.classList.add('visible');
     input.classList.add('active');
   } else {
-    btn.classList.remove('visible');
+    btnClear.classList.remove('visible');
+    btnShare.classList.remove('visible');
     input.classList.remove('active');
   }
   renderHistory();
@@ -285,6 +338,7 @@ function onDateFilterChange(){
 function clearDateFilter(){
   document.getElementById('date-filter').value = '';
   document.getElementById('btn-clear-date').classList.remove('visible');
+  document.getElementById('btn-share-date').classList.remove('visible');
   document.getElementById('date-filter').classList.remove('active');
   renderHistory();
 }
@@ -312,15 +366,21 @@ function showToast(msg){
 function addEntry(){
   const name=document.getElementById('cust-name').value.trim();
   const amount=parseFloat(document.getElementById('cust-amount').value);
+  const discount=parseFloat(document.getElementById('cust-discount').value)||0;
+  const invoices=document.getElementById('cust-invoices').value.trim();
   const date=document.getElementById('cust-date').value;
   if(!name){showToast('Please enter customer name');return;}
   if(!amount||amount<=0){showToast('Please enter a valid amount');return;}
+  if(discount>=amount){showToast('Discount cannot exceed collected amount');return;}
   if(!date){showToast('Please select a date');return;}
-  entries.unshift({id:Date.now(),name,amount,date,method:selMethod});
+  entries.unshift({id:Date.now(),name,amount,discount,invoices,date,method:selMethod});
   save();
   document.getElementById('cust-name').value='';
   document.getElementById('cust-amount').value='';
+  document.getElementById('cust-discount').value='';
+  document.getElementById('cust-invoices').value='';
   document.getElementById('cust-date').value=today();
+  document.getElementById('net-bar').style.display='none';
   showToast('Payment recorded!');
 }
 
@@ -348,8 +408,8 @@ function highlightMatch(text, query){
 
 function renderHistory(){
   const todayStr = today();
-  const total = entries.reduce((s,e)=>s+e.amount,0);
-  const todayTotal = entries.filter(e=>e.date===todayStr).reduce((s,e)=>s+e.amount,0);
+  const total = entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  const todayTotal = entries.filter(e=>e.date===todayStr).reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
   document.getElementById('s-total').textContent = 'QAR '+fmtAmt(total);
   document.getElementById('s-count').textContent = entries.length;
   document.getElementById('s-today').textContent = 'QAR '+fmtAmt(todayTotal);
@@ -362,9 +422,6 @@ function renderHistory(){
     const matchDate = !dateFilter || e.date === dateFilter;
     return matchName && matchDate;
   });
-
-  // Keep insertion order (newest first — entries are unshifted on add)
-  // No extra sorting applied
 
   const rc = document.getElementById('results-count');
   let countMsg = '';
@@ -390,20 +447,54 @@ function renderHistory(){
     return;
   }
 
-  list.innerHTML = filtered.map(e => `
+  list.innerHTML = filtered.map(e => {
+    const disc = e.discount || 0;
+    const net = e.amount - disc;
+    const discLine = disc > 0 ? `<div class="hi-discount-line">−QAR ${fmtAmt(disc)} discount</div>` : '';
+    const invLine = e.invoices ? `<div class="hi-date" style="margin-top:2px">🧾 ${escapeHtml(e.invoices)}</div>` : '';
+    return `
     <div class="hist-item">
       <div class="hi-badge ${e.method}">${methodIcons[e.method]}</div>
       <div class="hi-info">
         <div class="hi-name">${highlightMatch(e.name, query)}</div>
         <div class="hi-date">${fmtDate(e.date)} · ${highlightMatch(methodLabels[e.method], query)}</div>
+        ${invLine}
       </div>
-      <div class="hi-amount">QAR ${fmtAmt(e.amount)}</div>
+      <div class="hi-amount">
+        QAR ${fmtAmt(net)}
+        ${discLine}
+      </div>
       <button class="hi-del" onclick="deleteEntry(${e.id})" title="Delete">✕</button>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
-/* ── Share / Export ────────────────────────────────────────────────── */
+/* ── Share selected date to WhatsApp ──────────────────────────────── */
+function shareSelectedDate(){
+  const dateFilter = document.getElementById('date-filter').value;
+  if(!dateFilter){showToast('Select a date first');return;}
+  const dayEntries = entries.filter(e => e.date === dateFilter);
+  if(dayEntries.length === 0){showToast('No records for this date');return;}
+  const dayTotal = dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  let message = `*ReemCollection — ${fmtDate(dateFilter)}*\n`;
+  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+  dayEntries.forEach((e,i) => {
+    const disc = e.discount || 0;
+    const net = e.amount - disc;
+    message += `${i+1}. ${methodIcons[e.method]} *${e.name}*\n`;
+    message += `   QAR ${fmtAmt(net)}`;
+    if(disc > 0) message += ` (−QAR ${fmtAmt(disc)} disc)`;
+    message += '\n';
+    if(e.invoices) message += `   🧾 ${e.invoices}\n`;
+    message += '\n';
+  });
+  message += '━━━━━━━━━━━━━━━━━━━━\n';
+  message += `*Total: QAR ${fmtAmt(dayTotal)}* · ${dayEntries.length} transaction${dayEntries.length!==1?'s':''}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(message), '_blank');
+  showToast('Opening WhatsApp...');
+}
+
+/* ── Share all to WhatsApp ─────────────────────────────────────────── */
 function shareToWhatsApp(){
   if(entries.length===0){showToast('No records to share');return;}
   const byDate = {};
@@ -413,12 +504,17 @@ function shareToWhatsApp(){
   });
   let message = '*ReemCollection - Payment Report*\n';
   message += '━━━━━━━━━━━━━━━━━━━━\n\n';
-  const total = entries.reduce((s,e)=>s+e.amount,0);
+  const total = entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
   Object.keys(byDate).sort().reverse().forEach(date => {
-    const dateTotal = byDate[date].reduce((s,e)=>s+e.amount,0);
+    const dateTotal = byDate[date].reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
     message += `📅 *${fmtDate(date)}*\n`;
     byDate[date].forEach(e => {
-      message += `${methodIcons[e.method]} ${e.name} - QAR ${fmtAmt(e.amount)}\n`;
+      const disc = e.discount || 0;
+      const net = e.amount - disc;
+      message += `${methodIcons[e.method]} ${e.name} — QAR ${fmtAmt(net)}`;
+      if(disc > 0) message += ` (−QAR ${fmtAmt(disc)})`;
+      if(e.invoices) message += ` | 🧾 ${e.invoices}`;
+      message += '\n';
     });
     message += `Subtotal: QAR ${fmtAmt(dateTotal)}\n\n`;
   });
@@ -429,10 +525,11 @@ function shareToWhatsApp(){
   showToast('Opening WhatsApp...');
 }
 
+/* ── Export JPG ────────────────────────────────────────────────────── */
 async function exportJPG(){
   if(entries.length===0){showToast('No records to export');return;}
   const todayStr=today();
-  const total=entries.reduce((s,e)=>s+e.amount,0);
+  const total=entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
   const snap=document.getElementById('snapshot');
   snap.innerHTML=`
     <div class="snap-header">
@@ -442,20 +539,25 @@ async function exportJPG(){
       </div>
       <div class="snap-total">
         <div class="snap-total-val">QAR ${fmtAmt(total)}</div>
-        <div class="snap-total-lbl">Total collected</div>
+        <div class="snap-total-lbl">Total collected (net)</div>
       </div>
     </div>
-    ${entries.map((e,i)=>`
+    ${entries.map((e,i)=>{
+      const disc=e.discount||0; const net=e.amount-disc;
+      return `
       <div class="snap-row">
         <div class="snap-num">${i+1}</div>
         <div class="snap-badge" style="background:${e.method==='cash'?'#fef3d8':e.method==='bank'?'#e8eef8':'#e8f5ee'}">${methodIcons[e.method]}</div>
         <div class="snap-info">
           <div class="snap-name">${e.name}</div>
-          <div class="snap-meta">${fmtDate(e.date)} · ${methodLabels[e.method]}</div>
+          <div class="snap-meta">${fmtDate(e.date)} · ${methodLabels[e.method]}${e.invoices?' · 🧾 '+e.invoices:''}</div>
         </div>
-        <div class="snap-amt">QAR ${fmtAmt(e.amount)}</div>
-      </div>
-    `).join('')}
+        <div>
+          <div class="snap-amt">QAR ${fmtAmt(net)}</div>
+          ${disc>0?`<div class="snap-amt-disc">−QAR ${fmtAmt(disc)} disc</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}
     <div class="snap-footer">ReemCollection · payment-tracker · ${new Date().toLocaleString()}</div>
   `;
   snap.style.left='0';snap.style.zIndex='-1';
