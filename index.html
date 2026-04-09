@@ -12,7 +12,12 @@
     --green:#1a6b3c;--green-bg:#e8f5ee;--amber:#8a5a00;--amber-bg:#fef3d8;
     --blue:#1a4a8a;--blue-bg:#e8eef8;--red:#c0392b;--red-bg:#fdecea;
   }
-  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .dark-theme{
+    --bg:#1a1916;--card:#252420;--border:#3a3830;--text:#f7f6f2;--muted:#9a9890;
+    --green:#4ade80;--green-bg:#1a3320;--amber:#fbbf24;--amber-bg:#332a10;
+    --blue:#60a5fa;--blue-bg:#1a2740;--red:#f87171;--red-bg:#332020;
+  }
+  body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background 0.3s,color 0.3s}
   .app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
   .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
   .logo{display:flex;align-items:center;gap:10px}
@@ -20,17 +25,20 @@
   .logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
   .logo-text{font-size:15px;font-weight:600;letter-spacing:-0.3px}
   .logo-sub{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+  .header-right{display:flex;align-items:center;gap:10px}
   .date-chip{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);background:var(--card);border:0.5px solid var(--border);padding:5px 10px;border-radius:20px}
-  .tabs{display:flex;gap:4px;background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:1.25rem}
+  .theme-toggle{width:36px;height:36px;border:0.5px solid var(--border);border-radius:8px;background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.15s}
+  .theme-toggle:hover{border-color:var(--green)}
+  .tabs{display:flex;gap:4px;background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:4px;margin-bottom:1.25rem;transition:background 0.3s,border-color 0.3s}
   .tab{flex:1;padding:8px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:7px;color:var(--muted);font-family:'Sora',sans-serif;transition:all 0.15s}
   .tab.active{background:#1a6b3c;color:#fff}
-  .card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:1.25rem}
+  .card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:1.25rem;transition:background 0.3s,border-color 0.3s}
   .section-label{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.75rem}
   .field{margin-bottom:1rem}
   .field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:5px}
-  .field input{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s}
+  .field input{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s,background 0.3s}
   .field input:focus{border-color:#1a6b3c}
-  .field textarea{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s;resize:vertical;min-height:62px;line-height:1.5}
+  .field textarea{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s,background 0.3s;resize:vertical;min-height:62px;line-height:1.5}
   .field textarea:focus{border-color:#1a6b3c}
   .field textarea::placeholder{color:var(--muted);opacity:0.7}
 
@@ -38,14 +46,14 @@
   .amount-discount-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
   .amount-discount-row .field{margin-bottom:0}
   .amount-row{display:flex;gap:6px;align-items:stretch}
-  .amount-prefix{display:flex;align-items:center;padding:0 10px;background:var(--bg);border:0.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Mono',monospace;color:var(--muted);white-space:nowrap}
-  .amount-prefix.red{color:var(--red);background:var(--red-bg);border-color:#f5c6c0}
+  .amount-prefix{display:flex;align-items:center;padding:0 10px;background:var(--bg);border:0.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Mono',monospace;color:var(--muted);white-space:nowrap;transition:background 0.3s}
+  .amount-prefix.red{color:var(--red);background:var(--red-bg);border-color:var(--red-bg)}
   .amount-row input{flex:1;min-width:0}
   .net-amount-bar{display:flex;align-items:center;justify-content:space-between;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:8px;padding:8px 12px;margin-bottom:1rem;font-size:12px;color:var(--green)}
   .net-amount-bar span:last-child{font-family:'DM Mono',monospace;font-weight:600;font-size:13px}
 
   .methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .method{padding:10px 8px;border:0.5px solid var(--border);border-radius:9px;cursor:pointer;text-align:center;background:var(--bg);transition:all 0.15s}
+  .method{padding:10px 8px;border:0.5px solid var(--border);border-radius:9px;cursor:pointer;text-align:center;background:var(--bg);transition:all 0.15s,background 0.3s}
   .method.active.cash{background:var(--amber-bg);border-color:#d4a820;color:var(--amber)}
   .method.active.bank{background:var(--blue-bg);border-color:#5a82c8;color:var(--blue)}
   .method.active.pos{background:var(--green-bg);border-color:#4a9e6e;color:var(--green)}
@@ -56,19 +64,19 @@
   .toast{position:fixed;top:1rem;right:1rem;background:#1a6b3c;color:#fff;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
   .toast.show{opacity:1}
   .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
-  .stat{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:12px}
+  .stat{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:12px;transition:background 0.3s,border-color 0.3s}
   .stat-val{font-size:16px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-0.5px}
   .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
 
   .controls-row{display:flex;gap:8px;margin-bottom:0.5rem;align-items:stretch}
   .search-wrap{flex:1;position:relative;min-width:0}
-  .search-wrap input{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s}
+  .search-wrap input{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s,background 0.3s}
   .search-wrap input:focus{border-color:#1a6b3c}
   .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--muted)}
 
   .date-filter-row{display:flex;gap:8px;margin-bottom:0.85rem;align-items:center}
   .date-filter-wrap{flex:1;position:relative;min-width:0}
-  .date-filter-wrap input[type="date"]{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
+  .date-filter-wrap input[type="date"]{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s,background 0.3s;-webkit-appearance:none;appearance:none}
   .date-filter-wrap input[type="date"]:focus{border-color:#1a6b3c}
   .date-filter-wrap input[type="date"].active{border-color:#1a6b3c;background:var(--green-bg)}
   .date-filter-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--muted)}
@@ -81,9 +89,15 @@
   .btn-share-date.visible{display:block}
   .btn-share-date:hover{opacity:0.85}
 
+  /* Selected date total display */
+  .date-total-bar{display:flex;align-items:center;justify-content:space-between;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:10px;padding:12px 16px;margin-bottom:1rem;font-size:13px;color:var(--green);display:none}
+  .date-total-bar.visible{display:flex}
+  .date-total-bar span:first-child{font-weight:500}
+  .date-total-bar span:last-child{font-family:'DM Mono',monospace;font-weight:600;font-size:15px}
+
   .results-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:0.6rem}
   .hist-list{display:flex;flex-direction:column;gap:7px}
-  .hist-item{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .hist-item{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;transition:background 0.3s,border-color 0.3s}
   .hi-badge{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
   .hi-badge.cash{background:var(--amber-bg)}
   .hi-badge.bank{background:var(--blue-bg)}
@@ -92,18 +106,28 @@
   .hi-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .hi-date{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
   .hi-amount{font-size:14px;font-weight:600;font-family:'DM Mono',monospace;color:#1a6b3c;white-space:nowrap;text-align:right;line-height:1.4}
+  .dark-theme .hi-amount{color:var(--green)}
   .hi-discount-line{font-size:10px;color:var(--red);font-family:'DM Mono',monospace}
   .hi-del{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:5px;font-size:13px;opacity:0.6;transition:opacity 0.15s}
   .hi-del:hover{opacity:1;color:#c0392b}
   .highlight{background:#fff3cd;border-radius:2px;padding:0 1px}
+  .dark-theme .highlight{background:#5a5000}
   .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:13px}
   .export-bar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
-  .btn-export{flex:1;min-width:120px;padding:9px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--text);transition:all 0.15s}
+  .btn-export{flex:1;min-width:120px;padding:9px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--text);transition:all 0.15s,background 0.3s}
   .btn-export:hover{background:var(--bg)}
   .btn-export.primary{background:#1a6b3c;color:#fff;border-color:#1a6b3c}
   .btn-export.primary:hover{opacity:0.88}
   .btn-export.whatsapp{background:#25d366;color:#fff;border-color:#25d366}
   .btn-export.whatsapp:hover{opacity:0.88}
+
+  /* Import/Export section at bottom */
+  .import-export-section{margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid var(--border)}
+  .import-export-title{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.75rem}
+  .import-export-row{display:flex;gap:8px;flex-wrap:wrap}
+  .btn-import-export{flex:1;min-width:140px;padding:10px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--text);transition:all 0.15s,background 0.3s;display:flex;align-items:center;justify-content:center;gap:6px}
+  .btn-import-export:hover{background:var(--bg);border-color:var(--green)}
+  .btn-import-export input[type="file"]{display:none}
 
   .storage-info{display:flex;align-items:center;gap:7px;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:9px;padding:8px 12px;margin-bottom:1rem;font-size:11px;color:var(--green);font-family:'DM Mono',monospace}
   .storage-info span{flex:1}
@@ -139,7 +163,10 @@
         <div class="logo-sub">payment tracker</div>
       </div>
     </div>
-    <div class="date-chip" id="today-chip"></div>
+    <div class="header-right">
+      <div class="date-chip" id="today-chip"></div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    </div>
   </div>
 
   <div class="tabs">
@@ -239,6 +266,12 @@
       <button class="btn-clear-date" id="btn-clear-date" onclick="clearDateFilter()">✕ Clear</button>
     </div>
 
+    <!-- Selected date total display -->
+    <div class="date-total-bar" id="date-total-bar">
+      <span id="date-total-label">Total for selected date</span>
+      <span id="date-total-amount">QAR 0.00</span>
+    </div>
+
     <div class="results-count" id="results-count"></div>
 
     <div class="export-bar">
@@ -247,6 +280,20 @@
       <button class="btn-export primary" onclick="exportJPG()">⬇ Save as JPG</button>
     </div>
     <div class="hist-list" id="hist-list"></div>
+
+    <!-- Import/Export Section at bottom -->
+    <div class="import-export-section">
+      <div class="import-export-title">Backup & Restore</div>
+      <div class="import-export-row">
+        <button class="btn-import-export" onclick="exportData()">
+          <span>📤</span> Export Data
+        </button>
+        <label class="btn-import-export">
+          <span>📥</span> Import Data
+          <input type="file" id="import-file" accept=".json" onchange="importData(this)">
+        </label>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -261,6 +308,7 @@ const methodIcons = {cash:'💵',bank:'🏦',pos:'💳'};
 const methodLabels = {cash:'Cash',bank:'Bank Transfer',pos:'POS / Card'};
 
 const STORAGE_KEY = 'reemcollection_entries';
+const THEME_KEY = 'reemcollection_theme';
 
 function today(){return new Date().toISOString().split('T')[0];}
 function fmtDate(s){return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
@@ -268,6 +316,24 @@ function fmtAmt(v){return Number(v).toLocaleString('en-QA',{minimumFractionDigit
 
 document.getElementById('cust-date').value = today();
 document.getElementById('today-chip').textContent = fmtDate(today());
+
+/* ── Theme Toggle ─────────────────────────────────────────────────── */
+function loadTheme(){
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme === 'dark'){
+    document.body.classList.add('dark-theme');
+    document.querySelector('.theme-toggle').textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark-theme');
+    document.querySelector('.theme-toggle').textContent = '🌙';
+  }
+}
+
+function toggleTheme(){
+  const isDark = document.body.classList.toggle('dark-theme');
+  localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+  document.querySelector('.theme-toggle').textContent = isDark ? '☀️' : '🌙';
+}
 
 /* ── Net amount preview ────────────────────────────────────────────── */
 function updateNet(){
@@ -292,6 +358,7 @@ function load(){
   }catch(e){
     entries = [];
   }
+  loadTheme();
   updateStorageAge();
   renderHistory();
 }
@@ -323,14 +390,18 @@ function onDateFilterChange(){
   const btnClear = document.getElementById('btn-clear-date');
   const btnShare = document.getElementById('btn-share-date');
   const input = document.getElementById('date-filter');
+  const dateTotalBar = document.getElementById('date-total-bar');
+
   if(val){
     btnClear.classList.add('visible');
     btnShare.classList.add('visible');
     input.classList.add('active');
+    dateTotalBar.classList.add('visible');
   } else {
     btnClear.classList.remove('visible');
     btnShare.classList.remove('visible');
     input.classList.remove('active');
+    dateTotalBar.classList.remove('visible');
   }
   renderHistory();
 }
@@ -340,6 +411,7 @@ function clearDateFilter(){
   document.getElementById('btn-clear-date').classList.remove('visible');
   document.getElementById('btn-share-date').classList.remove('visible');
   document.getElementById('date-filter').classList.remove('active');
+  document.getElementById('date-total-bar').classList.remove('visible');
   renderHistory();
 }
 
@@ -397,6 +469,70 @@ function clearAll(){
   }
 }
 
+/* ── Import/Export Data ───────────────────────────────────────────── */
+function exportData(){
+  if(entries.length===0){showToast('No data to export');return;}
+  const data = {
+    version: '1.0',
+    exportedAt: new Date().toISOString(),
+    entries: entries
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'reemcollection-backup-' + today() + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Data exported!');
+}
+
+function importData(input){
+  const file = input.files[0];
+  if(!file){return;}
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.entries || !Array.isArray(data.entries)){
+        throw new Error('Invalid file format');
+      }
+
+      if(confirm(`Import ${data.entries.length} records? This will merge with existing data.`)){
+        // Merge entries, avoiding duplicates by ID
+        const existingIds = new Set(entries.map(e => e.id));
+        let added = 0;
+        data.entries.forEach(e => {
+          if(!existingIds.has(e.id)){
+            entries.push({
+              id: e.id || Date.now() + Math.random(),
+              name: e.name || 'Unknown',
+              amount: parseFloat(e.amount) || 0,
+              discount: parseFloat(e.discount) || 0,
+              invoices: e.invoices || '',
+              date: e.date || today(),
+              method: e.method || 'cash'
+            });
+            added++;
+          }
+        });
+
+        // Sort by date descending
+        entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        save();
+        renderHistory();
+        showToast(`Imported ${added} new records!`);
+      }
+    }catch(err){
+      showToast('Failed to import: ' + err.message);
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
 /* ── Render ────────────────────────────────────────────────────────── */
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function highlightMatch(text, query){
@@ -416,6 +552,13 @@ function renderHistory(){
 
   const query = (document.getElementById('search-input')||{value:''}).value.trim().toLowerCase();
   const dateFilter = (document.getElementById('date-filter')||{value:''}).value;
+
+  // Calculate and display selected date total
+  if(dateFilter){
+    const dateTotal = entries.filter(e => e.date === dateFilter).reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+    document.getElementById('date-total-label').textContent = 'Total for ' + fmtDate(dateFilter);
+    document.getElementById('date-total-amount').textContent = 'QAR ' + fmtAmt(dateTotal);
+  }
 
   let filtered = entries.filter(e => {
     const matchName = !query || e.name.toLowerCase().includes(query) || methodLabels[e.method].toLowerCase().includes(query);
@@ -476,19 +619,27 @@ function shareSelectedDate(){
   const dayEntries = entries.filter(e => e.date === dateFilter);
   if(dayEntries.length === 0){showToast('No records for this date');return;}
   const dayTotal = dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-  let message = `*ReemCollection — ${fmtDate(dateFilter)}*\n`;
-  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+  let message = `*ReemCollection — ${fmtDate(dateFilter)}*
+`;
+  message += '━━━━━━━━━━━━━━━━━━━━
+
+';
   dayEntries.forEach((e,i) => {
     const disc = e.discount || 0;
     const net = e.amount - disc;
-    message += `${i+1}. ${methodIcons[e.method]} *${e.name}*\n`;
+    message += `${i+1}. ${methodIcons[e.method]} *${e.name}*
+`;
     message += `   QAR ${fmtAmt(net)}`;
     if(disc > 0) message += ` (−QAR ${fmtAmt(disc)} disc)`;
-    message += '\n';
-    if(e.invoices) message += `   🧾 ${e.invoices}\n`;
-    message += '\n';
+    message += '
+';
+    if(e.invoices) message += `   🧾 ${e.invoices}
+`;
+    message += '
+';
   });
-  message += '━━━━━━━━━━━━━━━━━━━━\n';
+  message += '━━━━━━━━━━━━━━━━━━━━
+';
   message += `*Total: QAR ${fmtAmt(dayTotal)}* · ${dayEntries.length} transaction${dayEntries.length!==1?'s':''}`;
   window.open('https://wa.me/?text='+encodeURIComponent(message), '_blank');
   showToast('Opening WhatsApp...');
@@ -502,24 +653,33 @@ function shareToWhatsApp(){
     if(!byDate[e.date]) byDate[e.date] = [];
     byDate[e.date].push(e);
   });
-  let message = '*ReemCollection - Payment Report*\n';
-  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+  let message = '*ReemCollection - Payment Report*
+';
+  message += '━━━━━━━━━━━━━━━━━━━━
+
+';
   const total = entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
   Object.keys(byDate).sort().reverse().forEach(date => {
     const dateTotal = byDate[date].reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-    message += `📅 *${fmtDate(date)}*\n`;
+    message += `📅 *${fmtDate(date)}*
+`;
     byDate[date].forEach(e => {
       const disc = e.discount || 0;
       const net = e.amount - disc;
       message += `${methodIcons[e.method]} ${e.name} — QAR ${fmtAmt(net)}`;
       if(disc > 0) message += ` (−QAR ${fmtAmt(disc)})`;
       if(e.invoices) message += ` | 🧾 ${e.invoices}`;
-      message += '\n';
+      message += '
+';
     });
-    message += `Subtotal: QAR ${fmtAmt(dateTotal)}\n\n`;
+    message += `Subtotal: QAR ${fmtAmt(dateTotal)}
+
+`;
   });
-  message += '━━━━━━━━━━━━━━━━━━━━\n';
-  message += `*Total: QAR ${fmtAmt(total)}*\n`;
+  message += '━━━━━━━━━━━━━━━━━━━━
+';
+  message += `*Total: QAR ${fmtAmt(total)}*
+`;
   message += `Generated: ${fmtDate(today())}`;
   window.open('https://wa.me/?text='+encodeURIComponent(message), '_blank');
   showToast('Opening WhatsApp...');
