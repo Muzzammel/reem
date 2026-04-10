@@ -124,6 +124,25 @@
   .snap-amt{font-size:14px;font-weight:600;color:#1a6b3c;font-family:'DM Mono',monospace;text-align:right}
   .snap-amt-disc{font-size:10px;color:#c0392b;font-family:'DM Mono',monospace;text-align:right}
   .snap-footer{margin-top:18px;font-size:11px;color:#7a786e;font-family:'DM Mono',monospace;text-align:center}
+
+  /* Date summary bar */
+  .date-summary-bar{display:none;align-items:center;justify-content:space-between;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:10px;padding:10px 14px;margin-bottom:0.85rem;gap:10px}
+  .date-summary-bar.visible{display:flex}
+  .date-summary-left{display:flex;flex-direction:column;gap:2px}
+  .date-summary-label{font-size:11px;color:var(--green);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.6px}
+  .date-summary-amount{font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:var(--green);letter-spacing:-0.5px}
+  .date-summary-sub{font-size:11px;color:var(--green);font-family:'DM Mono',monospace;opacity:0.75}
+  .btn-share-date-bar{padding:10px 14px;border:0.5px solid #25d366;border-radius:9px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;background:#25d366;color:#fff;transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+  .btn-share-date-bar:hover{opacity:0.85}
+
+  /* Bottom export/import bar */
+  .bottom-bar{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
+  .btn-bottom{flex:1;min-width:120px;padding:10px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--text);transition:all 0.15s;text-align:center}
+  .btn-bottom:hover{background:var(--bg)}
+  .btn-bottom.export{background:#1a4a8a;color:#fff;border-color:#1a4a8a}
+  .btn-bottom.export:hover{opacity:0.88}
+  .btn-bottom.import{background:var(--amber-bg);color:var(--amber);border-color:#d4a820}
+  .btn-bottom.import:hover{opacity:0.88}
 </style>
 </head>
 <body>
@@ -229,14 +248,23 @@
       </div>
     </div>
 
-    <!-- Date filter + Share date button -->
+    <!-- Date filter + Clear button -->
     <div class="date-filter-row">
       <div class="date-filter-wrap">
         <span class="date-filter-icon">📅</span>
         <input type="date" id="date-filter" onchange="onDateFilterChange()" />
       </div>
-      <button class="btn-share-date" id="btn-share-date" onclick="shareSelectedDate()">📱 Share date</button>
       <button class="btn-clear-date" id="btn-clear-date" onclick="clearDateFilter()">✕ Clear</button>
+    </div>
+
+    <!-- Date summary bar (shows when a date is selected) -->
+    <div class="date-summary-bar" id="date-summary-bar">
+      <div class="date-summary-left">
+        <div class="date-summary-label">Total collected</div>
+        <div class="date-summary-amount" id="date-summary-amount">QAR 0.00</div>
+        <div class="date-summary-sub" id="date-summary-sub">0 transactions</div>
+      </div>
+      <button class="btn-share-date-bar" onclick="shareSelectedDate()">📱 Share date</button>
     </div>
 
     <div class="results-count" id="results-count"></div>
@@ -247,6 +275,13 @@
       <button class="btn-export primary" onclick="exportJPG()">⬇ Save as JPG</button>
     </div>
     <div class="hist-list" id="hist-list"></div>
+
+    <!-- Bottom Export / Import bar -->
+    <div class="bottom-bar">
+      <button class="btn-bottom export" onclick="exportJSON()">⬇ Export Data</button>
+      <button class="btn-bottom import" onclick="document.getElementById('import-input').click()">⬆ Import Data</button>
+      <input type="file" id="import-input" accept=".json" style="display:none" onchange="importJSON(event)" />
+    </div>
   </div>
 </div>
 
@@ -321,16 +356,16 @@ function updateStorageAge(){
 function onDateFilterChange(){
   const val = document.getElementById('date-filter').value;
   const btnClear = document.getElementById('btn-clear-date');
-  const btnShare = document.getElementById('btn-share-date');
+  const summaryBar = document.getElementById('date-summary-bar');
   const input = document.getElementById('date-filter');
   if(val){
     btnClear.classList.add('visible');
-    btnShare.classList.add('visible');
     input.classList.add('active');
+    summaryBar.classList.add('visible');
   } else {
     btnClear.classList.remove('visible');
-    btnShare.classList.remove('visible');
     input.classList.remove('active');
+    summaryBar.classList.remove('visible');
   }
   renderHistory();
 }
@@ -338,7 +373,7 @@ function onDateFilterChange(){
 function clearDateFilter(){
   document.getElementById('date-filter').value = '';
   document.getElementById('btn-clear-date').classList.remove('visible');
-  document.getElementById('btn-share-date').classList.remove('visible');
+  document.getElementById('date-summary-bar').classList.remove('visible');
   document.getElementById('date-filter').classList.remove('active');
   renderHistory();
 }
@@ -435,6 +470,14 @@ function renderHistory(){
     countMsg = entries.length+' record'+(entries.length!==1?'s':'')+' stored';
   }
   rc.textContent = countMsg;
+
+  // Update date summary bar
+  if(dateFilter){
+    const dayEntries = entries.filter(e => e.date === dateFilter);
+    const dayTotal = dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+    document.getElementById('date-summary-amount').textContent = 'QAR '+fmtAmt(dayTotal);
+    document.getElementById('date-summary-sub').textContent = dayEntries.length+' transaction'+(dayEntries.length!==1?'s':'');
+  }
 
   const list = document.getElementById('hist-list');
   if(filtered.length===0){
@@ -571,6 +614,47 @@ async function exportJPG(){
     showToast('JPG saved!');
   }catch(e){showToast('Export failed, try again');}
   snap.style.left='-9999px';
+}
+
+/* ── Export JSON ───────────────────────────────────────────────────── */
+function exportJSON(){
+  if(entries.length===0){showToast('No records to export');return;}
+  const data = JSON.stringify({exported: today(), entries}, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const link = document.createElement('a');
+  link.download = 'reemcollection-backup-'+today()+'.json';
+  link.href = URL.createObjectURL(blob);
+  link.click();
+  showToast('Data exported!');
+}
+
+/* ── Import JSON ───────────────────────────────────────────────────── */
+function importJSON(event){
+  const file = event.target.files[0];
+  if(!file){return;}
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const parsed = JSON.parse(e.target.result);
+      const imported = parsed.entries || parsed; // support both formats
+      if(!Array.isArray(imported)) throw new Error('Invalid format');
+      const maxId = entries.length ? Math.max(...entries.map(x=>x.id||0)) : 0;
+      const newEntries = imported.map((x,i) => ({discount:0,invoices:'',...x, id: Date.now()+maxId+i}));
+      // Merge: skip duplicates by name+date+amount
+      let added = 0;
+      newEntries.forEach(ne => {
+        const dup = entries.some(ex => ex.name===ne.name && ex.date===ne.date && ex.amount===ne.amount);
+        if(!dup){entries.unshift(ne); added++;}
+      });
+      save();
+      renderHistory();
+      showToast(added+' record'+(added!==1?'s':'')+' imported!');
+    }catch(err){
+      showToast('Import failed — invalid file');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
 }
 
 load();
