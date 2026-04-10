@@ -18,17 +18,17 @@
     --green:#3ecf78;--green-bg:#0d2b1a;--amber:#f0b93a;--amber-bg:#1f1800;
     --blue:#6499e9;--blue-bg:#0d1a30;--red:#e06c6c;--red-bg:#2b0e0e;
   }
-  /* Theme toggle button */
   .btn-theme{width:34px;height:34px;border:0.5px solid var(--border);border-radius:8px;background:var(--card);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0}
   .btn-theme:hover{background:var(--bg)}
-  /* Smooth transitions for theme switch */
   body,
   .card,.stat,.hist-item,.method,.field input,.field textarea,
   .tabs,.tab,.btn-export,.btn-bottom,.btn-clear-date,.date-chip,
-  .storage-info,.export-bar,.controls-row,.date-filter-row{transition:var(--transition)}
+  .storage-info,.export-bar,.controls-row,.date-filter-row,
+  .menu-panel-inner,.menu-section,.autocomplete-dropdown,.ac-item,
+  .modal,.shortcut-chip,.date-range-row input{transition:var(--transition)}
   body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
   .app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
-  .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+  .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
   .logo{display:flex;align-items:center;gap:10px}
   .logo-icon{width:36px;height:36px;background:#1a6b3c;border-radius:8px;display:flex;align-items:center;justify-content:center}
   .logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
@@ -47,8 +47,6 @@
   .field textarea{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.15s;resize:vertical;min-height:62px;line-height:1.5}
   .field textarea:focus{border-color:#1a6b3c}
   .field textarea::placeholder{color:var(--muted);opacity:0.7}
-
-  /* Amount + Discount side by side */
   .amount-discount-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
   .amount-discount-row .field{margin-bottom:0}
   .amount-row{display:flex;gap:6px;align-items:stretch}
@@ -57,7 +55,6 @@
   .amount-row input{flex:1;min-width:0}
   .net-amount-bar{display:flex;align-items:center;justify-content:space-between;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:8px;padding:8px 12px;margin-bottom:1rem;font-size:12px;color:var(--green)}
   .net-amount-bar span:last-child{font-family:'DM Mono',monospace;font-weight:600;font-size:13px}
-
   .methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .method{padding:10px 8px;border:0.5px solid var(--border);border-radius:9px;cursor:pointer;text-align:center;background:var(--bg);transition:all 0.15s}
   .method.active.cash{background:var(--amber-bg);border-color:#d4a820;color:var(--amber)}
@@ -67,19 +64,19 @@
   .method-name{font-size:12px;font-weight:500}
   .btn-add{width:100%;padding:12px;background:#1a6b3c;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;transition:opacity 0.15s}
   .btn-add:hover{opacity:0.88}
+  .kbd-hint{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;text-align:center;margin-top:7px;opacity:0.7}
+  .kbd{display:inline-block;padding:1px 5px;background:var(--bg);border:0.5px solid var(--border);border-radius:4px;font-size:10px}
   .toast{position:fixed;top:1rem;right:1rem;background:#1a6b3c;color:#fff;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:9999}
   .toast.show{opacity:1}
   .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
   .stat{background:var(--card);border:0.5px solid var(--border);border-radius:11px;padding:12px}
   .stat-val{font-size:16px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-0.5px}
   .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-
   .controls-row{display:flex;gap:8px;margin-bottom:0.5rem;align-items:stretch}
   .search-wrap{flex:1;position:relative;min-width:0}
   .search-wrap input{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s}
   .search-wrap input:focus{border-color:#1a6b3c}
   .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none;color:var(--muted)}
-
   .date-filter-row{display:flex;gap:8px;margin-bottom:0.85rem;align-items:center}
   .date-filter-wrap{flex:1;position:relative;min-width:0}
   .date-filter-wrap input[type="date"]{width:100%;padding:9px 12px 9px 34px;border:0.5px solid var(--border);border-radius:9px;font-size:13px;font-family:'Sora',sans-serif;background:var(--card);color:var(--text);outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none}
@@ -89,15 +86,14 @@
   .btn-clear-date{padding:9px 12px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--muted);transition:all 0.15s;white-space:nowrap;display:none}
   .btn-clear-date.visible{display:block}
   .btn-clear-date:hover{border-color:#c0392b;color:#c0392b}
-
-  /* Share selected date button */
   .btn-share-date{padding:9px 12px;border:0.5px solid #25d366;border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:#25d366;color:#fff;transition:all 0.15s;white-space:nowrap;display:none}
   .btn-share-date.visible{display:block}
   .btn-share-date:hover{opacity:0.85}
-
   .results-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:0.6rem}
   .hist-list{display:flex;flex-direction:column;gap:7px}
-  .hist-item{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+  .hist-item{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;position:relative;transform:translateX(0);transition:transform 0.22s ease,border-color 0.2s;touch-action:pan-y}
+  .hist-item.swiping{transition:none}
+  .hist-item.confirm-active{border-color:var(--red)}
   .hi-badge{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
   .hi-badge.cash{background:var(--amber-bg)}
   .hi-badge.bank{background:var(--blue-bg)}
@@ -107,8 +103,15 @@
   .hi-date{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
   .hi-amount{font-size:14px;font-weight:600;font-family:'DM Mono',monospace;color:#1a6b3c;white-space:nowrap;text-align:right;line-height:1.4}
   .hi-discount-line{font-size:10px;color:var(--red);font-family:'DM Mono',monospace}
+  /* delete controls */
+  .hi-del-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
   .hi-del{background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;border-radius:5px;font-size:13px;opacity:0.6;transition:opacity 0.15s}
   .hi-del:hover{opacity:1;color:#c0392b}
+  .del-confirm{display:none;align-items:center;gap:5px}
+  .del-confirm.show{display:flex}
+  .del-confirm-text{font-size:11px;color:var(--red);font-weight:500;white-space:nowrap}
+  .del-yes{padding:3px 9px;background:var(--red);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer}
+  .del-no{padding:3px 8px;background:none;border:0.5px solid var(--border);border-radius:6px;font-size:11px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;color:var(--muted)}
   .highlight{background:#fff3cd;border-radius:2px;padding:0 1px}
   .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:13px}
   .export-bar{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
@@ -118,10 +121,8 @@
   .btn-export.primary:hover{opacity:0.88}
   .btn-export.whatsapp{background:#25d366;color:#fff;border-color:#25d366}
   .btn-export.whatsapp:hover{opacity:0.88}
-
   .storage-info{display:flex;align-items:center;gap:7px;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:9px;padding:8px 12px;margin-bottom:1rem;font-size:11px;color:var(--green);font-family:'DM Mono',monospace}
   .storage-info span{flex:1}
-
   #snapshot{position:absolute;left:-9999px;top:0;width:600px;background:#f7f6f2;padding:32px;font-family:'Sora',sans-serif}
   .snap-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;border-bottom:1.5px solid #e4e2da;padding-bottom:18px}
   .snap-title{font-size:20px;font-weight:600;color:#1a1916}
@@ -138,8 +139,6 @@
   .snap-amt{font-size:14px;font-weight:600;color:#1a6b3c;font-family:'DM Mono',monospace;text-align:right}
   .snap-amt-disc{font-size:10px;color:#c0392b;font-family:'DM Mono',monospace;text-align:right}
   .snap-footer{margin-top:18px;font-size:11px;color:#7a786e;font-family:'DM Mono',monospace;text-align:center}
-
-  /* Date summary bar */
   .date-summary-bar{display:none;align-items:center;justify-content:space-between;background:var(--green-bg);border:0.5px solid #4a9e6e;border-radius:10px;padding:10px 14px;margin-bottom:0.85rem;gap:10px}
   .date-summary-bar.visible{display:flex}
   .date-summary-left{display:flex;flex-direction:column;gap:2px}
@@ -148,8 +147,6 @@
   .date-summary-sub{font-size:11px;color:var(--green);font-family:'DM Mono',monospace;opacity:0.75}
   .btn-share-date-bar{padding:10px 14px;border:0.5px solid #25d366;border-radius:9px;font-size:12px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;background:#25d366;color:#fff;transition:all 0.15s;white-space:nowrap;flex-shrink:0}
   .btn-share-date-bar:hover{opacity:0.85}
-
-  /* Bottom export/import bar */
   .bottom-bar{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
   .btn-bottom{flex:1;min-width:120px;padding:10px;border:0.5px solid var(--border);border-radius:9px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;cursor:pointer;background:var(--card);color:var(--text);transition:all 0.15s;text-align:center}
   .btn-bottom:hover{background:var(--bg)}
@@ -157,11 +154,167 @@
   .btn-bottom.export:hover{opacity:0.88}
   .btn-bottom.import{background:var(--amber-bg);color:var(--amber);border-color:#d4a820}
   .btn-bottom.import:hover{opacity:0.88}
+
+  /* ═══════════════════════════════════════════
+     SWIPE-TO-DELETE
+  ═══════════════════════════════════════════ */
+  .swipe-wrapper{position:relative;overflow:hidden;border-radius:10px}
+  .swipe-delete-bg{
+    position:absolute;right:0;top:0;bottom:0;width:72px;
+    background:var(--red);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fff;font-size:17px;border-radius:10px;cursor:pointer;user-select:none;
+    gap:2px;
+  }
+  .swipe-delete-bg span{font-size:9px;font-family:'DM Mono',monospace;font-weight:500;letter-spacing:0.3px}
+
+  /* ═══════════════════════════════════════════
+     HEADER MENU BUTTON
+  ═══════════════════════════════════════════ */
+  .btn-menu{
+    width:34px;height:34px;border:0.5px solid var(--border);border-radius:8px;
+    background:var(--card);cursor:pointer;font-size:15px;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.2s;flex-shrink:0;position:relative;
+  }
+  .btn-menu:hover{background:var(--bg)}
+  .btn-menu.open{background:var(--green);border-color:var(--green);color:#fff}
+
+  /* ═══════════════════════════════════════════
+     SLIDE-DOWN MENU PANEL
+  ═══════════════════════════════════════════ */
+  .menu-panel{
+    max-height:0;overflow:hidden;
+    transition:max-height 0.38s cubic-bezier(0.4,0,0.2,1),opacity 0.25s,margin 0.3s;
+    opacity:0;margin-bottom:0;
+  }
+  .menu-panel.open{max-height:700px;opacity:1;margin-bottom:1.25rem}
+  .menu-panel-inner{
+    background:var(--card);border:0.5px solid var(--border);border-radius:14px;overflow:hidden;
+  }
+  .menu-section{padding:1rem 1.25rem}
+  .menu-section + .menu-section{border-top:0.5px solid var(--border)}
+  .menu-section-title{
+    font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.7rem;
+    display:flex;align-items:center;gap:6px;
+  }
+
+  /* Method Breakdown */
+  .method-breakdown{display:flex;flex-direction:column;gap:9px}
+  .mb-row{display:flex;align-items:center;gap:8px}
+  .mb-label{font-size:12px;font-weight:500;min-width:80px;display:flex;align-items:center;gap:5px}
+  .mb-bar-track{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+  .mb-bar{height:100%;border-radius:3px;transition:width 0.5s ease;min-width:0}
+  .mb-bar.cash{background:var(--amber)}
+  .mb-bar.bank{background:var(--blue)}
+  .mb-bar.pos{background:var(--green)}
+  .mb-amount{font-size:12px;font-family:'DM Mono',monospace;font-weight:500;min-width:90px;text-align:right;color:var(--text)}
+  .mb-pct{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;min-width:30px;text-align:right}
+  .mb-total-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:0.5px solid var(--border)}
+  .mb-total-label{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+  .mb-total-val{font-size:14px;font-weight:600;font-family:'DM Mono',monospace;color:var(--green)}
+
+  /* Date Range */
+  .date-range-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+  .drf-wrap{position:relative}
+  .drf-label{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
+  .drf-wrap input[type="date"]{
+    width:100%;padding:8px 10px;border:0.5px solid var(--border);border-radius:8px;
+    font-size:12px;font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);
+    outline:none;transition:border-color 0.15s;-webkit-appearance:none;appearance:none;
+  }
+  .drf-wrap input[type="date"]:focus{border-color:var(--green)}
+  .drf-wrap input[type="date"].active{border-color:var(--green);background:var(--green-bg)}
+  .date-range-btns{display:flex;gap:6px;margin-bottom:0}
+  .btn-range{
+    flex:1;padding:8px;font-size:12px;font-weight:500;font-family:'Sora',sans-serif;
+    border:0.5px solid var(--border);border-radius:8px;background:var(--bg);
+    color:var(--muted);cursor:pointer;transition:all 0.15s;
+  }
+  .btn-range:hover{background:var(--card);color:var(--text)}
+  .btn-range.apply{background:var(--green);color:#fff;border-color:var(--green)}
+  .btn-range.apply:hover{opacity:0.88}
+  .range-result{
+    display:none;margin-top:10px;background:var(--green-bg);
+    border:0.5px solid #4a9e6e;border-radius:9px;padding:10px 12px;
+  }
+  .range-result.show{display:block}
+  .range-result-label{font-size:10px;color:var(--green);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px}
+  .range-result-val{font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:var(--green);letter-spacing:-0.5px}
+  .range-result-sub{font-size:11px;color:var(--green);font-family:'DM Mono',monospace;opacity:0.8;margin-top:2px}
+  .btn-range-share{
+    display:inline-flex;align-items:center;gap:5px;margin-top:8px;
+    padding:6px 12px;background:#25d366;color:#fff;border:none;
+    border-radius:7px;font-size:11px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;
+    transition:opacity 0.15s;
+  }
+  .btn-range-share:hover{opacity:0.88}
+
+  /* Customer Shortcuts */
+  .shortcut-chips{display:flex;flex-wrap:wrap;gap:6px;min-height:24px}
+  .shortcut-chip{
+    padding:5px 11px;background:var(--bg);border:0.5px solid var(--border);
+    border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;
+    transition:all 0.15s;color:var(--text);white-space:nowrap;
+    max-width:140px;overflow:hidden;text-overflow:ellipsis;
+  }
+  .shortcut-chip:hover{border-color:var(--green);color:var(--green);background:var(--green-bg)}
+  .shortcut-none{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+
+  /* ═══════════════════════════════════════════
+     AUTOCOMPLETE DROPDOWN
+  ═══════════════════════════════════════════ */
+  .autocomplete-wrap{position:relative}
+  .ac-dropdown{
+    position:absolute;top:calc(100% + 4px);left:0;right:0;
+    background:var(--card);border:0.5px solid var(--border);
+    border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.12);
+    z-index:200;max-height:150px;overflow-y:auto;display:none;
+  }
+  .ac-dropdown.show{display:block}
+  .ac-item{
+    padding:9px 13px;font-size:13px;cursor:pointer;
+    display:flex;align-items:center;gap:8px;
+    border-bottom:0.5px solid var(--border);transition:background 0.1s;
+  }
+  .ac-item:last-child{border-bottom:none}
+  .ac-item:hover,.ac-item.focused{background:var(--green-bg);color:var(--green)}
+  .ac-item-icon{font-size:11px;color:var(--muted);flex-shrink:0}
+
+  /* ═══════════════════════════════════════════
+     BACKUP REMINDER MODAL
+  ═══════════════════════════════════════════ */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.5);
+    z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;
+    backdrop-filter:blur(2px);
+  }
+  .modal-overlay.show{display:flex}
+  .modal{
+    background:var(--card);border:0.5px solid var(--border);
+    border-radius:16px;padding:1.75rem 1.5rem;max-width:320px;width:100%;
+    text-align:center;animation:modalIn 0.25s ease;
+  }
+  @keyframes modalIn{from{transform:scale(0.92);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal-icon{font-size:36px;margin-bottom:0.8rem}
+  .modal-title{font-size:16px;font-weight:600;margin-bottom:0.5rem}
+  .modal-body{font-size:13px;color:var(--muted);margin-bottom:1.25rem;line-height:1.6}
+  .modal-body strong{color:var(--text)}
+  .modal-actions{display:flex;gap:8px}
+  .modal-btn{
+    flex:1;padding:11px;font-size:13px;font-weight:600;
+    font-family:'Sora',sans-serif;border:none;border-radius:9px;
+    cursor:pointer;transition:opacity 0.15s;
+  }
+  .modal-btn.primary{background:#1a4a8a;color:#fff}
+  .modal-btn.secondary{background:var(--bg);color:var(--muted);border:0.5px solid var(--border)}
+  .modal-btn:hover{opacity:0.85}
 </style>
 </head>
 <body>
 
 <div class="app">
+  <!-- ── Header ── -->
   <div class="header">
     <div class="logo">
       <div class="logo-icon">
@@ -174,24 +327,100 @@
     </div>
     <div style="display:flex;align-items:center;gap:8px">
       <div class="date-chip" id="today-chip"></div>
+      <button class="btn-menu" id="btn-menu" onclick="toggleMenu()" title="Quick tools">☰</button>
       <button class="btn-theme" id="btn-theme" onclick="toggleTheme()" title="Toggle dark/light mode">🌙</button>
     </div>
   </div>
 
+  <!-- ── Slide-down Menu Panel ── -->
+  <div class="menu-panel" id="menu-panel">
+    <div class="menu-panel-inner">
+
+      <!-- Section 1: Payment Method Breakdown -->
+      <div class="menu-section">
+        <div class="menu-section-title">📊 Payment breakdown</div>
+        <div class="method-breakdown" id="mb-rows">
+          <div class="mb-row">
+            <div class="mb-label">💵 Cash</div>
+            <div class="mb-bar-track"><div class="mb-bar cash" id="mb-bar-cash" style="width:0%"></div></div>
+            <div class="mb-pct" id="mb-pct-cash">0%</div>
+            <div class="mb-amount" id="mb-amt-cash">QAR 0.00</div>
+          </div>
+          <div class="mb-row">
+            <div class="mb-label">🏦 Bank</div>
+            <div class="mb-bar-track"><div class="mb-bar bank" id="mb-bar-bank" style="width:0%"></div></div>
+            <div class="mb-pct" id="mb-pct-bank">0%</div>
+            <div class="mb-amount" id="mb-amt-bank">QAR 0.00</div>
+          </div>
+          <div class="mb-row">
+            <div class="mb-label">💳 POS</div>
+            <div class="mb-bar-track"><div class="mb-bar pos" id="mb-bar-pos" style="width:0%"></div></div>
+            <div class="mb-pct" id="mb-pct-pos">0%</div>
+            <div class="mb-amount" id="mb-amt-pos">QAR 0.00</div>
+          </div>
+          <div class="mb-total-row">
+            <span class="mb-total-label">Total (net)</span>
+            <span class="mb-total-val" id="mb-total">QAR 0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Date Range Summary -->
+      <div class="menu-section">
+        <div class="menu-section-title">📅 Date range summary</div>
+        <div class="date-range-grid">
+          <div class="drf-wrap">
+            <div class="drf-label">From</div>
+            <input type="date" id="range-from" onchange="onRangeChange()" />
+          </div>
+          <div class="drf-wrap">
+            <div class="drf-label">To</div>
+            <input type="date" id="range-to" onchange="onRangeChange()" />
+          </div>
+        </div>
+        <div class="date-range-btns">
+          <button class="btn-range" onclick="setRangePreset('week')">This week</button>
+          <button class="btn-range" onclick="setRangePreset('month')">This month</button>
+          <button class="btn-range" onclick="clearRange()">Clear</button>
+        </div>
+        <div class="range-result" id="range-result">
+          <div class="range-result-label">Total collected</div>
+          <div class="range-result-val" id="range-result-val">QAR 0.00</div>
+          <div class="range-result-sub" id="range-result-sub">0 transactions</div>
+          <button class="btn-range-share" onclick="shareRange()">📱 Share via WhatsApp</button>
+        </div>
+      </div>
+
+      <!-- Section 3: Repeat Customer Shortcuts -->
+      <div class="menu-section">
+        <div class="menu-section-title">👤 Quick customer (recent)</div>
+        <div class="shortcut-chips" id="shortcut-chips">
+          <span class="shortcut-none">Add entries to see shortcuts</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Tabs ── -->
   <div class="tabs">
     <button class="tab active" onclick="switchTab('add',this)">+ New Entry</button>
     <button class="tab" onclick="switchTab('history',this)">History</button>
   </div>
 
+  <!-- ══ ADD TAB ══ -->
   <div id="tab-add">
     <div class="card">
       <div class="section-label">Customer details</div>
       <div class="field">
         <label>Customer name</label>
-        <input type="text" id="cust-name" placeholder="Enter full name" />
+        <div class="autocomplete-wrap">
+          <input type="text" id="cust-name" placeholder="Enter full name" autocomplete="off"
+            oninput="onNameInput()" onkeydown="onNameKeydown(event)" onblur="hideAcDelayed()" />
+          <div class="ac-dropdown" id="ac-dropdown"></div>
+        </div>
       </div>
 
-      <!-- Amount + Discount side by side -->
       <div class="amount-discount-row">
         <div class="field">
           <label>Amount collected</label>
@@ -208,16 +437,14 @@
           </div>
         </div>
       </div>
-      <!-- Net amount preview bar -->
       <div class="net-amount-bar" id="net-bar" style="display:none">
         <span>Net after discount</span>
         <span id="net-preview">QAR 0.00</span>
       </div>
 
-      <!-- Invoice numbers note box (before Date) -->
       <div class="field">
         <label>Paid invoice numbers</label>
-        <textarea id="cust-invoices" placeholder="e.g. INV-1042, INV-1043, INV-1050&#10;Enter one or multiple invoice numbers"></textarea>
+        <textarea id="cust-invoices" placeholder="e.g. INV-1042, INV-1043&#10;Enter one or multiple invoice numbers"></textarea>
       </div>
 
       <div class="field">
@@ -241,10 +468,12 @@
           </div>
         </div>
       </div>
-      <button class="btn-add" onclick="addEntry()">Add Payment Record</button>
+      <button class="btn-add" id="btn-add" onclick="addEntry()">Add Payment Record</button>
+      <div class="kbd-hint">Press <span class="kbd">Enter</span> to submit · <span class="kbd">Ctrl+Enter</span> in notes</div>
     </div>
   </div>
 
+  <!-- ══ HISTORY TAB ══ -->
   <div id="tab-history" style="display:none">
     <div class="summary">
       <div class="stat"><div class="stat-val" id="s-total">QAR 0.00</div><div class="stat-lbl">Total collected</div></div>
@@ -257,7 +486,6 @@
       <span id="storage-age" style="opacity:0.75"></span>
     </div>
 
-    <!-- Name / method search -->
     <div class="controls-row">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
@@ -265,7 +493,6 @@
       </div>
     </div>
 
-    <!-- Date filter + Clear button -->
     <div class="date-filter-row">
       <div class="date-filter-wrap">
         <span class="date-filter-icon">📅</span>
@@ -274,7 +501,6 @@
       <button class="btn-clear-date" id="btn-clear-date" onclick="clearDateFilter()">✕ Clear</button>
     </div>
 
-    <!-- Date summary bar (shows when a date is selected) -->
     <div class="date-summary-bar" id="date-summary-bar">
       <div class="date-summary-left">
         <div class="date-summary-label">Total collected</div>
@@ -293,7 +519,6 @@
     </div>
     <div class="hist-list" id="hist-list"></div>
 
-    <!-- Bottom Export / Import bar -->
     <div class="bottom-bar">
       <button class="btn-bottom export" onclick="exportJSON()">⬇ Export Data</button>
       <button class="btn-bottom import" onclick="document.getElementById('import-input').click()">⬆ Import Data</button>
@@ -305,49 +530,267 @@
 <div class="toast" id="toast"></div>
 <div id="snapshot"></div>
 
+<!-- Backup reminder modal -->
+<div class="modal-overlay" id="backup-modal">
+  <div class="modal">
+    <div class="modal-icon">💾</div>
+    <div class="modal-title">Back up your data</div>
+    <div class="modal-body">
+      You have <strong id="backup-count">0</strong> records stored. Export a backup so you don't lose your data if this browser is cleared.
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="dismissBackup()">Remind later</button>
+      <button class="modal-btn primary" onclick="exportJSON();dismissBackup()">⬇ Export now</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
+/* ── State ─────────────────────────────────────────────────────────── */
 let entries = [];
 let selMethod = 'cash';
-const methodIcons = {cash:'💵',bank:'🏦',pos:'💳'};
-const methodLabels = {cash:'Cash',bank:'Bank Transfer',pos:'POS / Card'};
+let menuOpen = false;
+let acFocusIdx = -1;
+let acNames = [];
+const methodIcons   = {cash:'💵', bank:'🏦', pos:'💳'};
+const methodLabels  = {cash:'Cash', bank:'Bank Transfer', pos:'POS / Card'};
+const STORAGE_KEY   = 'reemcollection_entries';
+const BACKUP_REMIND = 'reemcollection_backup_reminded';
 
-const STORAGE_KEY = 'reemcollection_entries';
+/* ── Helpers ───────────────────────────────────────────────────────── */
+function today(){ return new Date().toISOString().split('T')[0]; }
+function fmtDate(s){ return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function fmtAmt(v){ return Number(v).toLocaleString('en-QA',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function escapeHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function highlightMatch(text, query){
+  if(!query) return escapeHtml(text);
+  const escaped = escapeHtml(text);
+  const escapedQ = query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return escaped.replace(new RegExp('('+escapedQ+')','gi'),'<span class="highlight">$1</span>');
+}
 
-function today(){return new Date().toISOString().split('T')[0];}
-function fmtDate(s){return new Date(s+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
-function fmtAmt(v){return Number(v).toLocaleString('en-QA',{minimumFractionDigits:2,maximumFractionDigits:2});}
-
+/* ── Init ──────────────────────────────────────────────────────────── */
 document.getElementById('cust-date').value = today();
 document.getElementById('today-chip').textContent = fmtDate(today());
 
-/* ── Net amount preview ────────────────────────────────────────────── */
-function updateNet(){
-  const amount = parseFloat(document.getElementById('cust-amount').value) || 0;
-  const discount = parseFloat(document.getElementById('cust-discount').value) || 0;
-  const bar = document.getElementById('net-bar');
-  if(discount > 0 && amount > 0){
-    const net = Math.max(0, amount - discount);
-    document.getElementById('net-preview').textContent = 'QAR ' + fmtAmt(net);
-    bar.style.display = 'flex';
-  } else {
-    bar.style.display = 'none';
+/* ── Theme ─────────────────────────────────────────────────────────── */
+function toggleTheme(){
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.getElementById('btn-theme').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('reemcollection_theme', next);
+}
+function initTheme(){
+  const saved = localStorage.getItem('reemcollection_theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  if(theme === 'dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    const btn = document.getElementById('btn-theme');
+    if(btn) btn.textContent = '☀️';
   }
 }
 
-/* ── Persistent storage ────────────────────────────────────────────── */
+/* ════════════════════════════════════════════
+   HEADER MENU
+════════════════════════════════════════════ */
+function toggleMenu(){
+  menuOpen = !menuOpen;
+  const panel = document.getElementById('menu-panel');
+  const btn   = document.getElementById('btn-menu');
+  panel.classList.toggle('open', menuOpen);
+  btn.classList.toggle('open', menuOpen);
+  btn.textContent = menuOpen ? '✕' : '☰';
+  if(menuOpen){ renderBreakdown(); renderShortcuts(); }
+}
+
+/* ── Method Breakdown ──────────────────────────────────────────────── */
+function renderBreakdown(){
+  const totals = {cash:0, bank:0, pos:0};
+  entries.forEach(e => { totals[e.method] = (totals[e.method]||0) + (e.amount - (e.discount||0)); });
+  const grand = totals.cash + totals.bank + totals.pos;
+  ['cash','bank','pos'].forEach(m => {
+    const pct = grand > 0 ? Math.round((totals[m]/grand)*100) : 0;
+    document.getElementById('mb-bar-'+m).style.width = pct + '%';
+    document.getElementById('mb-pct-'+m).textContent = pct + '%';
+    document.getElementById('mb-amt-'+m).textContent = 'QAR ' + fmtAmt(totals[m]);
+  });
+  document.getElementById('mb-total').textContent = 'QAR ' + fmtAmt(grand);
+}
+
+/* ── Date Range Summary ────────────────────────────────────────────── */
+function setRangePreset(preset){
+  const now = new Date();
+  let from, to = today();
+  if(preset === 'week'){
+    const d = new Date(now);
+    d.setDate(d.getDate() - d.getDay() + (d.getDay()===0?-6:1));
+    from = d.toISOString().split('T')[0];
+  } else if(preset === 'month'){
+    from = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+  }
+  document.getElementById('range-from').value = from;
+  document.getElementById('range-to').value   = to;
+  document.getElementById('range-from').classList.add('active');
+  document.getElementById('range-to').classList.add('active');
+  applyRange();
+}
+function onRangeChange(){
+  const from = document.getElementById('range-from').value;
+  const to   = document.getElementById('range-to').value;
+  document.getElementById('range-from').classList.toggle('active', !!from);
+  document.getElementById('range-to').classList.toggle('active', !!to);
+  if(from && to) applyRange();
+}
+function applyRange(){
+  const from = document.getElementById('range-from').value;
+  const to   = document.getElementById('range-to').value;
+  if(!from || !to){ document.getElementById('range-result').classList.remove('show'); return; }
+  const filtered = entries.filter(e => e.date >= from && e.date <= to);
+  const total = filtered.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  document.getElementById('range-result-val').textContent = 'QAR ' + fmtAmt(total);
+  document.getElementById('range-result-sub').textContent =
+    filtered.length + ' transaction' + (filtered.length!==1?'s':'') +
+    ' · ' + fmtDate(from) + ' → ' + fmtDate(to);
+  document.getElementById('range-result').classList.add('show');
+}
+function clearRange(){
+  document.getElementById('range-from').value = '';
+  document.getElementById('range-to').value   = '';
+  document.getElementById('range-from').classList.remove('active');
+  document.getElementById('range-to').classList.remove('active');
+  document.getElementById('range-result').classList.remove('show');
+}
+function shareRange(){
+  const from = document.getElementById('range-from').value;
+  const to   = document.getElementById('range-to').value;
+  if(!from || !to){ showToast('Select a date range first'); return; }
+  const filtered = entries.filter(e => e.date >= from && e.date <= to);
+  if(!filtered.length){ showToast('No records in this range'); return; }
+  const total = filtered.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  let msg = `*ReemCollection — ${fmtDate(from)} to ${fmtDate(to)}*\n`;
+  msg += '━━━━━━━━━━━━━━━━━━━━\n\n';
+  filtered.forEach((e,i)=>{
+    const net = e.amount-(e.discount||0);
+    msg += `${i+1}. ${methodIcons[e.method]} *${e.name}* — QAR ${fmtAmt(net)}`;
+    if(e.discount>0) msg += ` (−QAR ${fmtAmt(e.discount)})`;
+    if(e.invoices) msg += `\n   🧾 ${e.invoices}`;
+    msg += '\n';
+  });
+  msg += '\n━━━━━━━━━━━━━━━━━━━━\n';
+  msg += `*Total: QAR ${fmtAmt(total)}* · ${filtered.length} transaction${filtered.length!==1?'s':''}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+  showToast('Opening WhatsApp...');
+}
+
+/* ── Customer Shortcuts ────────────────────────────────────────────── */
+function getRecentCustomers(){
+  const seen = new Set();
+  return entries.filter(e=>{ if(seen.has(e.name)) return false; seen.add(e.name); return true; })
+                .slice(0,10).map(e=>e.name);
+}
+function renderShortcuts(){
+  const names = getRecentCustomers();
+  const wrap = document.getElementById('shortcut-chips');
+  if(!names.length){
+    wrap.innerHTML = '<span class="shortcut-none">Add entries to see shortcuts</span>';
+    return;
+  }
+  wrap.innerHTML = names.map(n=>
+    `<button class="shortcut-chip" onclick="fillCustomer('${escapeHtml(n)}')" title="${escapeHtml(n)}">${escapeHtml(n)}</button>`
+  ).join('');
+}
+function fillCustomer(name){
+  switchTab('add', document.querySelector('.tab'));
+  document.getElementById('cust-name').value = name;
+  toggleMenu();
+  document.getElementById('cust-amount').focus();
+}
+
+/* ════════════════════════════════════════════
+   AUTOCOMPLETE
+════════════════════════════════════════════ */
+function onNameInput(){
+  const val = document.getElementById('cust-name').value.trim().toLowerCase();
+  const dropdown = document.getElementById('ac-dropdown');
+  acFocusIdx = -1;
+  if(!val || val.length < 1){ dropdown.classList.remove('show'); return; }
+  const names = getRecentCustomers().filter(n=>n.toLowerCase().includes(val) && n.toLowerCase()!==val);
+  if(!names.length){ dropdown.classList.remove('show'); return; }
+  acNames = names.slice(0,6);
+  dropdown.innerHTML = acNames.map((n,i)=>
+    `<div class="ac-item" data-idx="${i}" onmousedown="selectAcName('${escapeHtml(n)}')">`+
+    `<span class="ac-item-icon">🕐</span>${escapeHtml(n)}</div>`
+  ).join('');
+  dropdown.classList.add('show');
+}
+function onNameKeydown(e){
+  const dropdown = document.getElementById('ac-dropdown');
+  if(!dropdown.classList.contains('show')){
+    if(e.key==='Enter'){ e.preventDefault(); addEntry(); }
+    return;
+  }
+  const items = dropdown.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){
+    e.preventDefault();
+    acFocusIdx = Math.min(acFocusIdx+1, items.length-1);
+    items.forEach((el,i)=>el.classList.toggle('focused',i===acFocusIdx));
+  } else if(e.key==='ArrowUp'){
+    e.preventDefault();
+    acFocusIdx = Math.max(acFocusIdx-1, -1);
+    items.forEach((el,i)=>el.classList.toggle('focused',i===acFocusIdx));
+  } else if(e.key==='Enter'){
+    e.preventDefault();
+    if(acFocusIdx>=0 && acNames[acFocusIdx]){ selectAcName(acNames[acFocusIdx]); }
+    else { dropdown.classList.remove('show'); addEntry(); }
+  } else if(e.key==='Escape'){
+    dropdown.classList.remove('show');
+  }
+}
+function selectAcName(name){
+  document.getElementById('cust-name').value = name;
+  document.getElementById('ac-dropdown').classList.remove('show');
+  document.getElementById('cust-amount').focus();
+}
+function hideAcDelayed(){ setTimeout(()=>document.getElementById('ac-dropdown').classList.remove('show'),180); }
+
+/* ════════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+════════════════════════════════════════════ */
+document.addEventListener('keydown', function(e){
+  // Ctrl/Cmd+Enter from anywhere on add tab submits
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){
+    if(document.getElementById('tab-add').style.display !== 'none'){
+      e.preventDefault(); addEntry(); return;
+    }
+  }
+  // Plain Enter on non-textarea inputs in add form
+  if(e.key==='Enter' && !e.ctrlKey && !e.metaKey){
+    const tag = document.activeElement.tagName;
+    const id  = document.activeElement.id;
+    if(tag==='INPUT' && ['cust-name','cust-amount','cust-discount','cust-date'].includes(id)){
+      if(document.getElementById('tab-add').style.display !== 'none'){
+        const dropdown = document.getElementById('ac-dropdown');
+        if(!dropdown.classList.contains('show')){ e.preventDefault(); addEntry(); }
+      }
+    }
+  }
+});
+
+/* ════════════════════════════════════════════
+   STORAGE
+════════════════════════════════════════════ */
 function load(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(raw) entries = JSON.parse(raw);
-    entries = entries.map((e,i) => ({id: e.id || Date.now()+i, discount: 0, invoices: '', ...e}));
-  }catch(e){
-    entries = [];
-  }
+    entries = entries.map((e,i)=>({id:e.id||Date.now()+i, discount:0, invoices:'', ...e}));
+  }catch(e){ entries=[]; }
   updateStorageAge();
   renderHistory();
 }
-
 function save(){
   try{
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
@@ -355,23 +798,40 @@ function save(){
       localStorage.setItem('reemcollection_since', today());
     }
     updateStorageAge();
-  }catch(e){
-    showToast('Failed to save data');
-  }
+    checkBackupReminder();
+  }catch(e){ showToast('Failed to save data'); }
 }
-
 function updateStorageAge(){
   const since = localStorage.getItem('reemcollection_since');
   const el = document.getElementById('storage-age');
   if(since && el){
-    const days = Math.floor((new Date(today()) - new Date(since)) / 86400000);
-    el.textContent = days === 0 ? 'since today' : 'since '+fmtDate(since)+' ('+days+'d)';
+    const days = Math.floor((new Date(today())-new Date(since))/86400000);
+    el.textContent = days===0?'since today':'since '+fmtDate(since)+' ('+days+'d)';
   }
 }
 
-/* ── Date filter ───────────────────────────────────────────────────── */
+/* ════════════════════════════════════════════
+   BACKUP REMINDER
+════════════════════════════════════════════ */
+function checkBackupReminder(){
+  if(entries.length < 50) return;
+  const last = localStorage.getItem(BACKUP_REMIND);
+  const todayStr = today();
+  // remind at most once every 7 days
+  if(last && (new Date(todayStr)-new Date(last))/86400000 < 7) return;
+  document.getElementById('backup-count').textContent = entries.length;
+  document.getElementById('backup-modal').classList.add('show');
+}
+function dismissBackup(){
+  localStorage.setItem(BACKUP_REMIND, today());
+  document.getElementById('backup-modal').classList.remove('show');
+}
+
+/* ════════════════════════════════════════════
+   DATE FILTER (single day — original)
+════════════════════════════════════════════ */
 function onDateFilterChange(){
-  const val = document.getElementById('date-filter').value;
+  const val   = document.getElementById('date-filter').value;
   const btnClear = document.getElementById('btn-clear-date');
   const summaryBar = document.getElementById('date-summary-bar');
   const input = document.getElementById('date-filter');
@@ -386,16 +846,17 @@ function onDateFilterChange(){
   }
   renderHistory();
 }
-
 function clearDateFilter(){
-  document.getElementById('date-filter').value = '';
+  document.getElementById('date-filter').value='';
   document.getElementById('btn-clear-date').classList.remove('visible');
   document.getElementById('date-summary-bar').classList.remove('visible');
   document.getElementById('date-filter').classList.remove('active');
   renderHistory();
 }
 
-/* ── UI helpers ────────────────────────────────────────────────────── */
+/* ════════════════════════════════════════════
+   UI HELPERS
+════════════════════════════════════════════ */
 function selectMethod(m,el){
   selMethod=m;
   document.querySelectorAll('.method').forEach(x=>x.classList.remove('active'));
@@ -404,23 +865,34 @@ function selectMethod(m,el){
 function switchTab(tab,btn){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-add').style.display=tab==='add'?'block':'none';
-  document.getElementById('tab-history').style.display=tab==='history'?'block':'none';
+  document.getElementById('tab-add').style.display     = tab==='add'     ? 'block' : 'none';
+  document.getElementById('tab-history').style.display = tab==='history' ? 'block' : 'none';
   if(tab==='history') renderHistory();
 }
-function showToast(msg){
+function showToast(msg, duration=2200){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), duration);
+}
+function updateNet(){
+  const amount   = parseFloat(document.getElementById('cust-amount').value)||0;
+  const discount = parseFloat(document.getElementById('cust-discount').value)||0;
+  const bar = document.getElementById('net-bar');
+  if(discount>0 && amount>0){
+    document.getElementById('net-preview').textContent='QAR '+fmtAmt(Math.max(0,amount-discount));
+    bar.style.display='flex';
+  } else { bar.style.display='none'; }
 }
 
-/* ── CRUD ──────────────────────────────────────────────────────────── */
+/* ════════════════════════════════════════════
+   CRUD
+════════════════════════════════════════════ */
 function addEntry(){
-  const name=document.getElementById('cust-name').value.trim();
-  const amount=parseFloat(document.getElementById('cust-amount').value);
-  const discount=parseFloat(document.getElementById('cust-discount').value)||0;
-  const invoices=document.getElementById('cust-invoices').value.trim();
-  const date=document.getElementById('cust-date').value;
+  const name     = document.getElementById('cust-name').value.trim();
+  const amount   = parseFloat(document.getElementById('cust-amount').value);
+  const discount = parseFloat(document.getElementById('cust-discount').value)||0;
+  const invoices = document.getElementById('cust-invoices').value.trim();
+  const date     = document.getElementById('cust-date').value;
   if(!name){showToast('Please enter customer name');return;}
   if(!amount||amount<=0){showToast('Please enter a valid amount');return;}
   if(discount>=amount){showToast('Discount cannot exceed collected amount');return;}
@@ -433,161 +905,259 @@ function addEntry(){
   document.getElementById('cust-invoices').value='';
   document.getElementById('cust-date').value=today();
   document.getElementById('net-bar').style.display='none';
-  showToast('Payment recorded!');
+  document.getElementById('ac-dropdown').classList.remove('show');
+  showToast('✅ Payment recorded!');
 }
 
-function deleteEntry(id){entries=entries.filter(e=>e.id!==id);save();renderHistory();}
+/* ── Delete with confirmation ──────────────────────────────────────── */
+function startDeleteConfirm(id){
+  // Hide any other open confirms first
+  document.querySelectorAll('.del-confirm.show').forEach(el=>{
+    el.classList.remove('show');
+    const pid = el.id.replace('dc-','');
+    const delBtn = document.querySelector(`[data-del="${pid}"]`);
+    if(delBtn) delBtn.style.display='';
+    document.getElementById('hi-'+pid)?.classList.remove('confirm-active');
+  });
+  const dc  = document.getElementById('dc-'+id);
+  const btn = document.querySelector(`[data-del="${id}"]`);
+  if(!dc) return;
+  dc.classList.add('show');
+  if(btn) btn.style.display='none';
+  document.getElementById('hi-'+id)?.classList.add('confirm-active');
+}
+function cancelDelete(id){
+  const dc  = document.getElementById('dc-'+id);
+  const btn = document.querySelector(`[data-del="${id}"]`);
+  if(dc) dc.classList.remove('show');
+  if(btn) btn.style.display='';
+  document.getElementById('hi-'+id)?.classList.remove('confirm-active');
+  // snap swipe back
+  const hi = document.getElementById('hi-'+id);
+  if(hi){ hi.style.transform='translateX(0)'; hi._swipeX=0; }
+}
+function deleteEntry(id){
+  entries=entries.filter(e=>e.id!==id);
+  save();
+  renderHistory();
+  if(menuOpen) renderBreakdown();
+}
 
 function clearAll(){
   if(entries.length===0){showToast('Nothing to clear');return;}
   if(confirm('Clear all payment records?')){
     entries=[];
     localStorage.removeItem('reemcollection_since');
-    save();
-    renderHistory();
+    save(); renderHistory();
     showToast('All records cleared');
   }
 }
 
-/* ── Render ────────────────────────────────────────────────────────── */
-function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function highlightMatch(text, query){
-  if(!query) return escapeHtml(text);
-  const escaped=escapeHtml(text);
-  const escapedQ=query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  return escaped.replace(new RegExp('('+escapedQ+')', 'gi'), '<span class="highlight">$1</span>');
-}
-
+/* ════════════════════════════════════════════
+   RENDER HISTORY
+════════════════════════════════════════════ */
 function renderHistory(){
   const todayStr = today();
-  const total = entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  const total      = entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
   const todayTotal = entries.filter(e=>e.date===todayStr).reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-  document.getElementById('s-total').textContent = 'QAR '+fmtAmt(total);
-  document.getElementById('s-count').textContent = entries.length;
-  document.getElementById('s-today').textContent = 'QAR '+fmtAmt(todayTotal);
+  document.getElementById('s-total').textContent='QAR '+fmtAmt(total);
+  document.getElementById('s-count').textContent=entries.length;
+  document.getElementById('s-today').textContent='QAR '+fmtAmt(todayTotal);
 
-  const query = (document.getElementById('search-input')||{value:''}).value.trim().toLowerCase();
+  const query      = (document.getElementById('search-input')||{value:''}).value.trim().toLowerCase();
   const dateFilter = (document.getElementById('date-filter')||{value:''}).value;
-
-  let filtered = entries.filter(e => {
+  let filtered = entries.filter(e=>{
     const matchName = !query || e.name.toLowerCase().includes(query) || methodLabels[e.method].toLowerCase().includes(query);
-    const matchDate = !dateFilter || e.date === dateFilter;
+    const matchDate = !dateFilter || e.date===dateFilter;
     return matchName && matchDate;
   });
 
   const rc = document.getElementById('results-count');
-  let countMsg = '';
-  if(dateFilter && query){
-    countMsg = filtered.length+' result'+(filtered.length!==1?'s':'')+' on '+fmtDate(dateFilter)+' for "'+query+'"';
-  } else if(dateFilter){
-    countMsg = filtered.length+' record'+(filtered.length!==1?'s':'')+' on '+fmtDate(dateFilter);
-  } else if(query){
-    countMsg = filtered.length+' result'+(filtered.length!==1?'s':'')+' for "'+query+'"';
-  } else {
-    countMsg = entries.length+' record'+(entries.length!==1?'s':'')+' stored';
-  }
-  rc.textContent = countMsg;
+  let countMsg='';
+  if(dateFilter&&query)      countMsg=filtered.length+' result'+(filtered.length!==1?'s':'')+' on '+fmtDate(dateFilter)+' for "'+query+'"';
+  else if(dateFilter)        countMsg=filtered.length+' record'+(filtered.length!==1?'s':'')+' on '+fmtDate(dateFilter);
+  else if(query)             countMsg=filtered.length+' result'+(filtered.length!==1?'s':'')+' for "'+query+'"';
+  else                       countMsg=entries.length+' record'+(entries.length!==1?'s':'')+' stored';
+  rc.textContent=countMsg;
 
-  // Update date summary bar
   if(dateFilter){
-    const dayEntries = entries.filter(e => e.date === dateFilter);
-    const dayTotal = dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-    document.getElementById('date-summary-amount').textContent = 'QAR '+fmtAmt(dayTotal);
-    document.getElementById('date-summary-sub').textContent = dayEntries.length+' transaction'+(dayEntries.length!==1?'s':'');
+    const dayEntries=entries.filter(e=>e.date===dateFilter);
+    const dayTotal=dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+    document.getElementById('date-summary-amount').textContent='QAR '+fmtAmt(dayTotal);
+    document.getElementById('date-summary-sub').textContent=dayEntries.length+' transaction'+(dayEntries.length!==1?'s':'');
   }
 
-  const list = document.getElementById('hist-list');
+  const list=document.getElementById('hist-list');
   if(filtered.length===0){
-    let msg = '';
-    if(dateFilter && query) msg = 'No records match "'+escapeHtml(query)+'" on '+fmtDate(dateFilter)+'.';
-    else if(dateFilter) msg = 'No records found for '+fmtDate(dateFilter)+'.';
-    else if(query) msg = 'No records match "'+escapeHtml(query)+'".<br>Try a different name or method.';
-    else msg = 'No payment records yet.<br>Add your first entry above.';
-    list.innerHTML = '<div class="empty">'+msg+'</div>';
+    let msg='';
+    if(dateFilter&&query) msg='No records match "'+escapeHtml(query)+'" on '+fmtDate(dateFilter)+'.';
+    else if(dateFilter)   msg='No records found for '+fmtDate(dateFilter)+'.';
+    else if(query)        msg='No records match "'+escapeHtml(query)+'".<br>Try a different name or method.';
+    else                  msg='No payment records yet.<br>Add your first entry above.';
+    list.innerHTML='<div class="empty">'+msg+'</div>';
     return;
   }
 
-  list.innerHTML = filtered.map(e => {
-    const disc = e.discount || 0;
-    const net = e.amount - disc;
-    const discLine = disc > 0 ? `<div class="hi-discount-line">−QAR ${fmtAmt(disc)} discount</div>` : '';
-    const invLine = e.invoices ? `<div class="hi-date" style="margin-top:2px">🧾 ${escapeHtml(e.invoices)}</div>` : '';
+  list.innerHTML = filtered.map(e=>{
+    const disc=e.discount||0, net=e.amount-disc;
+    const discLine=disc>0?`<div class="hi-discount-line">−QAR ${fmtAmt(disc)} discount</div>`:'';
+    const invLine=e.invoices?`<div class="hi-date" style="margin-top:2px">🧾 ${escapeHtml(e.invoices)}</div>`:'';
     return `
-    <div class="hist-item">
-      <div class="hi-badge ${e.method}">${methodIcons[e.method]}</div>
-      <div class="hi-info">
-        <div class="hi-name">${highlightMatch(e.name, query)}</div>
-        <div class="hi-date">${fmtDate(e.date)} · ${highlightMatch(methodLabels[e.method], query)}</div>
-        ${invLine}
+    <div class="swipe-wrapper" id="sw-${e.id}">
+      <div class="swipe-delete-bg" id="sdb-${e.id}" onclick="onSwipeDeleteTap(${e.id})">
+        🗑️<span>Delete</span>
       </div>
-      <div class="hi-amount">
-        QAR ${fmtAmt(net)}
-        ${discLine}
+      <div class="hist-item" id="hi-${e.id}" data-id="${e.id}">
+        <div class="hi-badge ${e.method}">${methodIcons[e.method]}</div>
+        <div class="hi-info">
+          <div class="hi-name">${highlightMatch(e.name,query)}</div>
+          <div class="hi-date">${fmtDate(e.date)} · ${highlightMatch(methodLabels[e.method],query)}</div>
+          ${invLine}
+        </div>
+        <div class="hi-amount">
+          QAR ${fmtAmt(net)}
+          ${discLine}
+        </div>
+        <div class="hi-del-wrap">
+          <button class="hi-del" data-del="${e.id}" onclick="startDeleteConfirm(${e.id})" title="Delete">✕</button>
+          <div class="del-confirm" id="dc-${e.id}">
+            <span class="del-confirm-text">Delete?</span>
+            <button class="del-yes" onclick="deleteEntry(${e.id})">Yes</button>
+            <button class="del-no" onclick="cancelDelete(${e.id})">No</button>
+          </div>
+        </div>
       </div>
-      <button class="hi-del" onclick="deleteEntry(${e.id})" title="Delete">✕</button>
     </div>`;
   }).join('');
+
+  // Attach swipe events after render
+  filtered.forEach(e=>initSwipe(e.id));
 }
 
-/* ── Share selected date to WhatsApp ──────────────────────────────── */
-function shareSelectedDate(){
-  const dateFilter = document.getElementById('date-filter').value;
-  if(!dateFilter){showToast('Select a date first');return;}
-  const dayEntries = entries.filter(e => e.date === dateFilter);
-  if(dayEntries.length === 0){showToast('No records for this date');return;}
-  const dayTotal = dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-  let message = `*ReemCollection — ${fmtDate(dateFilter)}*\n`;
-  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
-  dayEntries.forEach((e,i) => {
-    const disc = e.discount || 0;
-    const net = e.amount - disc;
-    message += `${i+1}. ${methodIcons[e.method]} *${e.name}*\n`;
-    message += `   QAR ${fmtAmt(net)}`;
-    if(disc > 0) message += ` (−QAR ${fmtAmt(disc)} disc)`;
-    message += '\n';
-    if(e.invoices) message += `   🧾 ${e.invoices}\n`;
-    message += '\n';
+/* ════════════════════════════════════════════
+   SWIPE TO DELETE
+════════════════════════════════════════════ */
+function initSwipe(id){
+  const hi = document.getElementById('hi-'+id);
+  if(!hi) return;
+  const THRESHOLD = 55;
+  let startX=0, startY=0, isDragging=false, isHorizontal=null;
+  hi._swipeX = 0;
+
+  hi.addEventListener('touchstart', e=>{
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+    isHorizontal = null;
+    hi.classList.add('swiping');
+  },{passive:true});
+
+  hi.addEventListener('touchmove', e=>{
+    if(!isDragging) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if(isHorizontal===null){
+      isHorizontal = Math.abs(dx) > Math.abs(dy)+3;
+    }
+    if(!isHorizontal){ hi.classList.remove('swiping'); return; }
+    e.preventDefault();
+    const newX = Math.max(Math.min(dx, 0), -72);
+    hi._swipeX = newX;
+    hi.style.transform = `translateX(${newX}px)`;
+  },{passive:false});
+
+  hi.addEventListener('touchend', e=>{
+    hi.classList.remove('swiping');
+    isDragging = false;
+    if(hi._swipeX < -THRESHOLD){
+      hi.style.transform = 'translateX(-72px)';
+      hi._swipeX = -72;
+    } else {
+      hi.style.transform = 'translateX(0)';
+      hi._swipeX = 0;
+    }
   });
-  message += '━━━━━━━━━━━━━━━━━━━━\n';
-  message += `*Total: QAR ${fmtAmt(dayTotal)}* · ${dayEntries.length} transaction${dayEntries.length!==1?'s':''}`;
-  window.open('https://wa.me/?text='+encodeURIComponent(message), '_blank');
-  showToast('Opening WhatsApp...');
 }
 
-/* ── Share all to WhatsApp ─────────────────────────────────────────── */
-function shareToWhatsApp(){
-  if(entries.length===0){showToast('No records to share');return;}
-  const byDate = {};
-  entries.forEach(e => {
-    if(!byDate[e.date]) byDate[e.date] = [];
-    byDate[e.date].push(e);
-  });
-  let message = '*ReemCollection - Payment Report*\n';
-  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
-  const total = entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-  Object.keys(byDate).sort().reverse().forEach(date => {
-    const dateTotal = byDate[date].reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
-    message += `📅 *${fmtDate(date)}*\n`;
-    byDate[date].forEach(e => {
-      const disc = e.discount || 0;
-      const net = e.amount - disc;
-      message += `${methodIcons[e.method]} ${e.name} — QAR ${fmtAmt(net)}`;
-      if(disc > 0) message += ` (−QAR ${fmtAmt(disc)})`;
-      if(e.invoices) message += ` | 🧾 ${e.invoices}`;
-      message += '\n';
+function onSwipeDeleteTap(id){
+  // Snap back first (UX)
+  const hi = document.getElementById('hi-'+id);
+  if(hi){ hi.style.transform='translateX(0)'; hi._swipeX=0; }
+  startDeleteConfirm(id);
+}
+
+// Close any open swipes when tapping elsewhere
+document.addEventListener('touchstart', e=>{
+  if(!e.target.closest('.hist-item')){
+    document.querySelectorAll('.hist-item').forEach(hi=>{
+      if(hi._swipeX && hi._swipeX < 0){
+        hi.style.transform='translateX(0)';
+        hi._swipeX=0;
+      }
     });
-    message += `Subtotal: QAR ${fmtAmt(dateTotal)}\n\n`;
+  }
+},{passive:true});
+
+/* ════════════════════════════════════════════
+   SHARE — SELECTED DATE
+════════════════════════════════════════════ */
+function shareSelectedDate(){
+  const dateFilter=document.getElementById('date-filter').value;
+  if(!dateFilter){showToast('Select a date first');return;}
+  const dayEntries=entries.filter(e=>e.date===dateFilter);
+  if(!dayEntries.length){showToast('No records for this date');return;}
+  const dayTotal=dayEntries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  let message=`*ReemCollection — ${fmtDate(dateFilter)}*\n`;
+  message+='━━━━━━━━━━━━━━━━━━━━\n\n';
+  dayEntries.forEach((e,i)=>{
+    const disc=e.discount||0, net=e.amount-disc;
+    message+=`${i+1}. ${methodIcons[e.method]} *${e.name}*\n`;
+    message+=`   QAR ${fmtAmt(net)}`;
+    if(disc>0) message+=` (−QAR ${fmtAmt(disc)} disc)`;
+    message+='\n';
+    if(e.invoices) message+=`   🧾 ${e.invoices}\n`;
+    message+='\n';
   });
-  message += '━━━━━━━━━━━━━━━━━━━━\n';
-  message += `*Total: QAR ${fmtAmt(total)}*\n`;
-  message += `Generated: ${fmtDate(today())}`;
-  window.open('https://wa.me/?text='+encodeURIComponent(message), '_blank');
+  message+='━━━━━━━━━━━━━━━━━━━━\n';
+  message+=`*Total: QAR ${fmtAmt(dayTotal)}* · ${dayEntries.length} transaction${dayEntries.length!==1?'s':''}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank');
   showToast('Opening WhatsApp...');
 }
 
-/* ── Export JPG ────────────────────────────────────────────────────── */
+/* ════════════════════════════════════════════
+   SHARE ALL — WHATSAPP
+════════════════════════════════════════════ */
+function shareToWhatsApp(){
+  if(!entries.length){showToast('No records to share');return;}
+  const byDate={};
+  entries.forEach(e=>{ if(!byDate[e.date]) byDate[e.date]=[]; byDate[e.date].push(e); });
+  let message='*ReemCollection - Payment Report*\n';
+  message+='━━━━━━━━━━━━━━━━━━━━\n\n';
+  const total=entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+  Object.keys(byDate).sort().reverse().forEach(date=>{
+    const dateTotal=byDate[date].reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
+    message+=`📅 *${fmtDate(date)}*\n`;
+    byDate[date].forEach(e=>{
+      const disc=e.discount||0, net=e.amount-disc;
+      message+=`${methodIcons[e.method]} ${e.name} — QAR ${fmtAmt(net)}`;
+      if(disc>0) message+=` (−QAR ${fmtAmt(disc)})`;
+      if(e.invoices) message+=` | 🧾 ${e.invoices}`;
+      message+='\n';
+    });
+    message+=`Subtotal: QAR ${fmtAmt(dateTotal)}\n\n`;
+  });
+  message+='━━━━━━━━━━━━━━━━━━━━\n';
+  message+=`*Total: QAR ${fmtAmt(total)}*\n`;
+  message+=`Generated: ${fmtDate(today())}`;
+  window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank');
+  showToast('Opening WhatsApp...');
+}
+
+/* ════════════════════════════════════════════
+   EXPORT JPG
+════════════════════════════════════════════ */
 async function exportJPG(){
-  if(entries.length===0){showToast('No records to export');return;}
+  if(!entries.length){showToast('No records to export');return;}
   const todayStr=today();
   const total=entries.reduce((s,e)=>s+(e.amount-(e.discount||0)),0);
   const snap=document.getElementById('snapshot');
@@ -603,7 +1173,7 @@ async function exportJPG(){
       </div>
     </div>
     ${entries.map((e,i)=>{
-      const disc=e.discount||0; const net=e.amount-disc;
+      const disc=e.discount||0, net=e.amount-disc;
       return `
       <div class="snap-row">
         <div class="snap-num">${i+1}</div>
@@ -620,7 +1190,7 @@ async function exportJPG(){
     }).join('')}
     <div class="snap-footer">ReemCollection · payment-tracker · ${new Date().toLocaleString()}</div>
   `;
-  snap.style.left='0';snap.style.zIndex='-1';
+  snap.style.left='0'; snap.style.zIndex='-1';
   showToast('Generating image...');
   try{
     const canvas=await html2canvas(snap,{scale:2,useCORS:true,backgroundColor:'#f7f6f2'});
@@ -629,74 +1199,50 @@ async function exportJPG(){
     link.href=canvas.toDataURL('image/jpeg',0.95);
     link.click();
     showToast('JPG saved!');
-  }catch(e){showToast('Export failed, try again');}
+  }catch(e){ showToast('Export failed, try again'); }
   snap.style.left='-9999px';
 }
 
-/* ── Export JSON ───────────────────────────────────────────────────── */
+/* ════════════════════════════════════════════
+   EXPORT / IMPORT JSON
+════════════════════════════════════════════ */
 function exportJSON(){
-  if(entries.length===0){showToast('No records to export');return;}
-  const data = JSON.stringify({exported: today(), entries}, null, 2);
-  const blob = new Blob([data], {type:'application/json'});
-  const link = document.createElement('a');
-  link.download = 'reemcollection-backup-'+today()+'.json';
-  link.href = URL.createObjectURL(blob);
+  if(!entries.length){showToast('No records to export');return;}
+  const data=JSON.stringify({exported:today(),entries},null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const link=document.createElement('a');
+  link.download='reemcollection-backup-'+today()+'.json';
+  link.href=URL.createObjectURL(blob);
   link.click();
   showToast('Data exported!');
 }
-
-/* ── Import JSON ───────────────────────────────────────────────────── */
 function importJSON(event){
-  const file = event.target.files[0];
+  const file=event.target.files[0];
   if(!file){return;}
-  const reader = new FileReader();
-  reader.onload = function(e){
+  const reader=new FileReader();
+  reader.onload=function(e){
     try{
-      const parsed = JSON.parse(e.target.result);
-      const imported = parsed.entries || parsed; // support both formats
+      const parsed=JSON.parse(e.target.result);
+      const imported=parsed.entries||parsed;
       if(!Array.isArray(imported)) throw new Error('Invalid format');
-      const maxId = entries.length ? Math.max(...entries.map(x=>x.id||0)) : 0;
-      const newEntries = imported.map((x,i) => ({discount:0,invoices:'',...x, id: Date.now()+maxId+i}));
-      // Merge: skip duplicates by name+date+amount
-      let added = 0;
-      newEntries.forEach(ne => {
-        const dup = entries.some(ex => ex.name===ne.name && ex.date===ne.date && ex.amount===ne.amount);
-        if(!dup){entries.unshift(ne); added++;}
+      const maxId=entries.length?Math.max(...entries.map(x=>x.id||0)):0;
+      const newEntries=imported.map((x,i)=>({discount:0,invoices:'',...x,id:Date.now()+maxId+i}));
+      let added=0;
+      newEntries.forEach(ne=>{
+        const dup=entries.some(ex=>ex.name===ne.name&&ex.date===ne.date&&ex.amount===ne.amount);
+        if(!dup){entries.unshift(ne);added++;}
       });
-      save();
-      renderHistory();
+      save(); renderHistory();
       showToast(added+' record'+(added!==1?'s':'')+' imported!');
-    }catch(err){
-      showToast('Import failed — invalid file');
-    }
-    event.target.value = '';
+    }catch(err){ showToast('Import failed — invalid file'); }
+    event.target.value='';
   };
   reader.readAsText(file);
 }
 
-/* ── Dark / Light mode ─────────────────────────────────────────────── */
-function toggleTheme(){
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const next = isDark ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  document.getElementById('btn-theme').textContent = next === 'dark' ? '☀️' : '🌙';
-  localStorage.setItem('reemcollection_theme', next);
-}
-
-function initTheme(){
-  const saved = localStorage.getItem('reemcollection_theme');
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = saved || (prefersDark ? 'dark' : 'light');
-  if(theme === 'dark'){
-    document.documentElement.setAttribute('data-theme','dark');
-    const btn = document.getElementById('btn-theme');
-    if(btn) btn.textContent = '☀️';
-  }
-}
-
+/* ── Boot ──────────────────────────────────────────────────────────── */
 initTheme();
 load();
 </script>
-
 </body>
 </html>
